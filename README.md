@@ -33,3 +33,8 @@ Think of your reason...
    Create a link container component that wraps around each country item. This component should use the Link component from react-router-dom to navigate to a detailed view of the country when clicked. It's suggested to wrap the Card.Img component with this link container.
 
 **_ We will do this step together _** 9. Set up country single.
+
+
+## Documentation for countries API
+
+https://restcountries.com/#endpoints-all
