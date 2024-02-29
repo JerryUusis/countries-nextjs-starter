@@ -10,10 +10,7 @@ import { auth } from "../auth/firebase";
 
 const Header = () => {
   const [user] = useAuthState(auth);
-
-  if (user) {
-    console.log("Logged in with user:", user);
-  }
+  
   return (
     <Container fluid>
       <Row>
