@@ -3,14 +3,34 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Row from "react-bootstrap/Row";
+import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../auth/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../auth/firebase";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const [user] = useAuthState(auth);
-  
+  const [loggedUsername, setLoggedUsername] = useState("");
+
+  useEffect(() => {
+    const userRef = collection(db, "users");
+    const q = query(userRef, where("uid", "==", user.uid));
+
+    const getUserData = async () => {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setLoggedUsername(doc.data().name);
+      });
+    };
+    if (user) {
+      getUserData();
+    }
+  }, [user]);
+
   return (
     <Container fluid>
       <Row>
@@ -19,6 +39,11 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav>
+                {user ? (
+                  <p >
+                    Logged in as <strong>{loggedUsername}</strong>
+                  </p>
+                ) : null}
                 <Link to="/">
                   <Button variant="contained">Home</Button>
                 </Link>
