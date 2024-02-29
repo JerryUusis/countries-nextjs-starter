@@ -26,40 +26,6 @@ const theme = createTheme({
 });
 
 function App() {
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <Root />,
-  //     children: [
-  //       {
-  //         path: "/",
-  //         element: <Home />,
-  //       },
-  //       {
-  //         path: "/countries",
-  //         element: <Countries />,
-  //       },
-  //       {
-  //         path: "countries/:single",
-  //         element: <CountriesSingle />,
-  //       },
-  //       {
-  //         path: "favourites",
-  //         element: <Favourites />
-  //       },
-  //       {
-  //         path: "/register",
-  //         element: <Register />
-  //       },
-  //       {
-  //         path: "/login",
-  //         element: <Login />
-  //       },
-
-  //     ],
-  //   },
-  // ]);
-
   return (
     <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -72,27 +38,15 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route
                 path="/countries"
-                element={
-                  <ProtectedRoute>
-                    <Countries />
-                  </ProtectedRoute>
-                }
+                element={<ProtectedRoute component={Countries} />}
               />
               <Route
                 path="/favourites"
-                element={
-                  <ProtectedRoute>
-                    <Favourites />
-                  </ProtectedRoute>
-                }
+                element={<ProtectedRoute component={Favourites} />}
               />
               <Route
                 path="/countries/:single"
-                element={
-                  <ProtectedRoute>
-                    <CountriesSingle />
-                  </ProtectedRoute>
-                }
+                element={<ProtectedRoute component={CountriesSingle} />}
               />
             </Routes>
           </Router>
