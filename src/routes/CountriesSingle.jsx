@@ -16,7 +16,7 @@ const CountriesSingle = () => {
   useEffect(() => {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=${VITE_OPENWEATHER_API}`)
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
         setError(true)
       })
       .then((response) => {
@@ -25,7 +25,7 @@ const CountriesSingle = () => {
       })
   }, [country.capital])
 
-  console.log(weather)
+  // console.log(weather)
   if (loading) {
     return (
       <Col className="text-center m-5">
@@ -55,8 +55,8 @@ const CountriesSingle = () => {
           {!error && weather && (
             <div>
               <p>
-                Right now it is <strong>{}</strong>{""}
-                degrees in {country.capital} and {""} {weather.weather[0].description}
+                Right now it is <strong>{weather.main.temp}</strong>{" "}
+                degrees in {country.capital} and {" "} {weather.weather[0].description}
               </p>
               <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} />
             </div>
