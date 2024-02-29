@@ -8,7 +8,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
-import { removeFavourite } from "../store/favouritesSlice";
+import { removeFavourite, clearFavourites } from "../store/favouritesSlice";
 
 const Favourites = () => {
     const dispatch = useDispatch();
@@ -19,6 +19,10 @@ const Favourites = () => {
         dispatch(removeFavourite(countryName))
     }
 
+    const handleClearFavourites = () => {
+        dispatch(clearFavourites())
+    }
+
     // TODO: Implement logic to retrieve favourites later.
     useEffect(() => {
         dispatch(initializeCountries());
@@ -26,6 +30,7 @@ const Favourites = () => {
 
     return (
         <Container fluid>
+            <Button onClick={() => handleClearFavourites()}>Clear favourites</Button>
             <Row xs={2} md={3} lg={4} className=" g-3">
                 {favourites.map((country) => (
                     <Col key={country.name.official} className="mt-5">
