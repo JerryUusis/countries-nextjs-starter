@@ -32,22 +32,23 @@ function App() {
         <ThemeProvider theme={theme}>
           <Router>
             <Routes>
-              <Route path="/" element={<Root />} />
-              <Route index element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route
-                path="/countries"
-                element={<ProtectedRoute component={Countries} />}
-              />
-              <Route
-                path="/favourites"
-                element={<ProtectedRoute component={Favourites} />}
-              />
-              <Route
-                path="/countries/:single"
-                element={<ProtectedRoute component={CountriesSingle} />}
-              />
+              <Route path="/" element={<Root />}>
+                <Route index element={<Home />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+                <Route
+                  path="/countries"
+                  element={<ProtectedRoute component={Countries} />}
+                />
+                <Route
+                  path="/favourites"
+                  element={<ProtectedRoute component={Favourites} />}
+                />
+                <Route
+                  path="/countries/:single"
+                  element={<ProtectedRoute component={CountriesSingle} />}
+                />
+              </Route>
             </Routes>
           </Router>
         </ThemeProvider>
