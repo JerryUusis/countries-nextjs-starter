@@ -29,7 +29,7 @@ const Header = () => {
     if (user) {
       getUserData();
     }
-  }, [user]);
+  }, []);
 
   return (
     <Container fluid>
