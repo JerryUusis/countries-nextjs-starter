@@ -7,29 +7,34 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../auth/firebase";
+import { auth, db } from "../auth/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../auth/firebase";
 import { useEffect, useState } from "react";
 
 const Header = () => {
   const [user] = useAuthState(auth);
   const [loggedUsername, setLoggedUsername] = useState("");
-
+  
   useEffect(() => {
-    const userRef = collection(db, "users");
-    const q = query(userRef, where("uid", "==", user.uid));
+    try {
+      const userRef = collection(db, "users");
+      const q = query(userRef, where("uid", "==", user?.uid));
 
-    const getUserData = async () => {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setLoggedUsername(doc.data().name);
-      });
-    };
-    if (user) {
-      getUserData();
+      const getUserData = async () => {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          setLoggedUsername(doc.data().name);
+        });
+      };
+      if (user) {
+        getUserData()
+      }
     }
-  }, []);
+    catch (error) {
+      console.log(error)
+    }
+  }, [user]);
+
 
   return (
     <Container fluid>
