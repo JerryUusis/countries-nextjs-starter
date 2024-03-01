@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Row from "react-bootstrap/Row";
-import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -35,6 +34,11 @@ const Header = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (!user) {
+      setLoggedUsername("")
+    }
+  },[user])
 
   return (
     <Container fluid>
