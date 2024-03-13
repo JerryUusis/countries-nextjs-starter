@@ -88,8 +88,8 @@ const Countries = () => {
   }
 
   return (
-    <Box>
-      <Box m={2}>
+    <Box sx={{ my: "2rem" }}>
+      <Box sx={{ my: "2rem", display: "flex", justifyContent: "center" }}>
         <TextField label="Countries" placeholder="Search for countries" onChange={(e) => setSearch(e.target.value)}></TextField>
       </Box>
       <Box sx={{ display: "flex", flexFlow: "wrap", gap: "1rem", justifyContent: "center" }}>
@@ -102,7 +102,7 @@ const Countries = () => {
               <Card sx={{ height: "350px", width: `${flagHeight * 2}px` }}>
                 <FavoriteIcon
                   onClick={() => dispatch(addFavourite(country))}
-                ></FavoriteIcon>
+                />
                 <Link
                   to={`/countries/${country.name.common}`}
                   state={{ country: country }}
