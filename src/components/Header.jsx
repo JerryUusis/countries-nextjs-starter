@@ -1,4 +1,4 @@
-import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, colors } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, NavLink } from "react-router-dom";
 import { logout } from "../auth/firebase";
@@ -52,7 +52,7 @@ const Header = () => {
   }
 
   const navBarItems = (
-    <Toolbar sx={{ backgroundColor: "secondary.main", display: "flex", justifyContent: setNavBarDisplay() }}>
+    <Toolbar sx={{ display: "flex", justifyContent: setNavBarDisplay() }}>
       {user ? (
         <Typography >
           Logged in as <strong>{loggedUsername}</strong>
@@ -60,33 +60,33 @@ const Header = () => {
       ) : null}
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>
         <NavLink to="/">
-          <Button variant="text" >Home</Button>
+          <Button variant="text" color="secondary">Home</Button>
         </NavLink>
         <Link to="/countries">
-          <Button variant="text">Countries</Button>
+          <Button variant="text" color="secondary">Countries</Button>
         </Link>
         <Link to="/favourites">
-          <Button variant="text">Favourites</Button>
+          <Button variant="text" color="secondary">Favourites</Button>
         </Link>
         {!user ? (
           <>
             <Link to="/register">
-              <Button variant="text">Register</Button>
+              <Button variant="text" color="secondary">Register</Button>
             </Link>
             <Link to="/login">
-              <Button variant="text">Login</Button>
+              <Button variant="text" color="secondary">Login</Button>
             </Link>
           </>
         ) : (
-          <Button onClick={logout}>Sign out</Button>
+          <Button onClick={logout} variant="outlined" color="secondary">Sign out</Button>
         )}
       </Box>
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <IconButton
           size="large"
           edge="end"
-          sx={{ color: "primary.main" }}
           onClick={toggleDrawer}
+          color="secondary"
         >
           <MenuIcon />
         </IconButton>
@@ -96,7 +96,7 @@ const Header = () => {
 
   const hamburgerItems = (
     <Box width={200}>
-      <ListItem component={Link} to="/" onClick={toggleDrawer}>
+      <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
         <ListItemText primary="Home" />
       </ListItem>
       <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
@@ -131,8 +131,13 @@ const Header = () => {
         anchor="right"
         open={anchorOpen}
         onClose={toggleDrawer}
+        PaperProps={{
+          sx: {
+            backgroundColor:"primary.main"
+          }
+        }}
       >
-        <List>
+        <List >
           {hamburgerItems}
         </List>
       </Drawer>
