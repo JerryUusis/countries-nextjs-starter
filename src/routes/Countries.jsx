@@ -22,19 +22,32 @@ const Countries = () => {
     );
   }
 
+  const filterCountries = (countriesArray, searchValue) => {
+    const filteredCountries = countriesArray.filter((country) =>
+      country.name.common.toLowerCase()
+        .includes(searchValue.toLowerCase()));
+    return filteredCountries;
+  }
+  // Instance of filterCountries return value
+  const filteredCountries = filterCountries(countriesList, search);
+
   return (
     <Box sx={{ my: "2rem" }}>
       <Box sx={{ my: "2rem", display: "flex", justifyContent: "center" }}>
-        <TextField label="Countries" placeholder="Search for countries" onChange={(e) => setSearch(e.target.value)}></TextField>
+        <TextField
+          label="Countries"
+          placeholder="Search countries"
+          onChange={(e) => setSearch(e.target.value)} />
       </Box>
-      <Box sx={{ display: "flex", flexFlow: "wrap", gap: "1rem", justifyContent: "center" }}>
-        {countriesList
-          .filter((country) =>
-            country.name.common.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((country) => (
-            <CountryCard key={country.name.common} country={country} />
-          ))}
+      <Box sx={{
+        display: "flex",
+        flexFlow: "wrap",
+        gap: "1rem",
+        justifyContent: "center"
+      }}>
+        {filteredCountries.map((country) => (
+          <CountryCard key={country.name.common} country={country} />
+        ))}
       </Box>
     </Box>
   );
