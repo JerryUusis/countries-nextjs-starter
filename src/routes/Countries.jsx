@@ -116,10 +116,12 @@ const Countries = () => {
                   </Link>
                 </Box>
                 <Box sx={{ p: "1rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                  <Typography sx={{ fontWeight: "bold" }}>{country.name.common}</Typography>
-                  <Typography sx={{ mb: "0.6rem" }}>
-                    {country.name.official}
-                  </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "column", gap:"0.25rem"}}>
+                    <Typography sx={{ fontWeight: "bold", lineHeight: "1" }}>{country.name.common}</Typography>
+                    <Typography sx={{ lineHeight: "1" }}>
+                      {country.name.official}
+                    </Typography>
+                  </Box>
                   <Box sx={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-evenly" }}>
                     <Typography sx={{ fontSize: "0.9rem", lineHeight: "1", fontStyle: "italic" }}>
                       {formatLanguages(country.languages)}
@@ -127,10 +129,10 @@ const Countries = () => {
                     <Typography sx={{ fontSize: "0.9rem" }} >
                       {formatCurrencies(country.currencies)}
                     </Typography>
+                  </Box>
                     <Typography >
                       {country.population.toLocaleString()}
                     </Typography>
-                  </Box>
                 </Box>
               </Card>
             </Box>
