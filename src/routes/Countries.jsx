@@ -99,35 +99,38 @@ const Countries = () => {
           )
           .map((country) => (
             <Box key={country.name.common}>
-              <Card sx={{ height: "350px", width: `${flagHeight * 2}px` }}>
-                <FavoriteIcon
-                  onClick={() => dispatch(addFavourite(country))}
-                />
-                <Link
-                  to={`/countries/${country.name.common}`}
-                  state={{ country: country }}
-                >
-                  <CardMedia
-                    image={country.flags.svg}
-                    sx={{ height: `${flagHeight}px` }}
+              <Card sx={{ height: "350px", width: `${flagHeight * 2}px`, display: "flex", flexDirection: "column" }}>
+                <Box position={"relative"}>
+                  <FavoriteIcon
+                    onClick={() => dispatch(addFavourite(country))}
+                    sx={{position:"absolute", top: 0, right: 0, m:"0.125rem", cursor:"pointer" }}
                   />
-                </Link>
-                <Box sx={{ p: "1rem" }}>
+                  <Link
+                    to={`/countries/${country.name.common}`}
+                    state={{ country: country }}
+                  >
+                    <CardMedia
+                      image={country.flags.svg}
+                      sx={{ height: `${flagHeight}px` }}
+                    />
+                  </Link>
+                </Box>
+                <Box sx={{ p: "1rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
                   <Typography sx={{ fontWeight: "bold" }}>{country.name.common}</Typography>
-                  <Typography sx={{ fontStyle: "italic" }}>
+                  <Typography sx={{ mb: "0.6rem" }}>
                     {country.name.official}
                   </Typography>
-                  <List>
-                    <ListItem>
+                  <Box sx={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-evenly" }}>
+                    <Typography sx={{ fontSize: "0.9rem", lineHeight: "1", fontStyle: "italic" }}>
                       {formatLanguages(country.languages)}
-                    </ListItem>
-                    <ListItem>
+                    </Typography>
+                    <Typography sx={{ fontSize: "0.9rem" }} >
                       {formatCurrencies(country.currencies)}
-                    </ListItem>
-                    <ListItem>
+                    </Typography>
+                    <Typography >
                       {country.population.toLocaleString()}
-                    </ListItem>
-                  </List>
+                    </Typography>
+                  </Box>
                 </Box>
               </Card>
             </Box>
