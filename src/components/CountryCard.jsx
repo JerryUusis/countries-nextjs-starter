@@ -1,5 +1,8 @@
 import { Box, Card, CardMedia, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import TranslateIcon from '@mui/icons-material/Translate';
+import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
 import { addFavourite } from "../store/favouritesSlice";
 import { useDispatch } from "react-redux";
@@ -94,16 +97,25 @@ const CountryCard = ({ country }) => {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-evenly" }}>
-            <Typography sx={{ fontSize: "0.9rem", lineHeight: "1", fontStyle: "italic" }}>
-              {formatLanguages(country.languages)}
-            </Typography>
-            <Typography sx={{ fontSize: "0.9rem" }} >
-              {formatCurrencies(country.currencies)}
+            <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+              <TranslateIcon sx={{ fontSize: "16px", opacity: "0.5" }} />
+              <Typography sx={{ fontSize: "0.9rem", lineHeight: "1", fontStyle: "italic" }}>
+                {formatLanguages(country.languages)}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+              <AttachMoneyIcon sx={{ fontSize: "16px", opacity: "0.5" }} />
+              <Typography sx={{ fontSize: "0.9rem" }} >
+                {formatCurrencies(country.currencies)}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem"}}>
+            <PeopleIcon sx={{ fontSize: "16px", opacity: "0.5" }}/>
+            <Typography >
+              {country.population.toLocaleString()}
             </Typography>
           </Box>
-          <Typography >
-            {country.population.toLocaleString()}
-          </Typography>
         </Box>
       </Card>
     </Box>
