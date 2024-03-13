@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, TextField, CircularProgress } from "@mui/material";
+import { Box, TextField, CircularProgress, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import CountryCard from "../components/CountryCard";
@@ -35,6 +35,7 @@ const Countries = () => {
     <Box sx={{ my: "2rem" }}>
       <Box sx={{ my: "2rem", display: "flex", justifyContent: "center" }}>
         <TextField
+          color="secondary"
           label="Countries"
           placeholder="Search countries"
           onChange={(e) => setSearch(e.target.value)} />
@@ -45,7 +46,9 @@ const Countries = () => {
         gap: "1rem",
         justifyContent: "center"
       }}>
-        {filteredCountries.map((country) => (
+        {filteredCountries.length === 0 ? 
+        <Typography>No countries found with "{search}"</Typography> : 
+        filteredCountries.map((country) => (
           <CountryCard key={country.name.common} country={country} />
         ))}
       </Box>
