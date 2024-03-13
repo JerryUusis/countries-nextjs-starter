@@ -71,6 +71,9 @@ const CountryCard = ({ country }) => {
     }
   }
 
+  const iconContainerProps = { display: "flex", alignItems: "flex-start", gap: "0.25rem" }
+  const smallIconProps = { fontSize: "0.9rem", opacity: "0.5" }
+
   return (
     <Box key={country.name.common}>
       <Card sx={{ height: "350px", width: `${FLAG_HEIGHT * 2}px`, display: "flex", flexDirection: "column" }}>
@@ -97,21 +100,21 @@ const CountryCard = ({ country }) => {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-evenly" }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-              <TranslateIcon sx={{ fontSize: "16px", opacity: "0.5" }} />
+            <Box sx={iconContainerProps}>
+              <TranslateIcon sx={smallIconProps} />
               <Typography sx={{ fontSize: "0.9rem", lineHeight: "1", fontStyle: "italic" }}>
                 {formatLanguages(country.languages)}
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-              <AttachMoneyIcon sx={{ fontSize: "16px", opacity: "0.5" }} />
-              <Typography sx={{ fontSize: "0.9rem" }} >
+            <Box sx={iconContainerProps}>
+              <AttachMoneyIcon sx={smallIconProps} />
+              <Typography sx={{ fontSize: "0.9rem", lineHeight: "1" }} >
                 {formatCurrencies(country.currencies)}
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem"}}>
-            <PeopleIcon sx={{ fontSize: "16px", opacity: "0.5" }}/>
+          <Box sx={iconContainerProps}>
+            <PeopleIcon sx={{ opacity: "0.5" }} />
             <Typography >
               {country.population.toLocaleString()}
             </Typography>
