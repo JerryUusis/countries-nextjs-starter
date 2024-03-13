@@ -19,10 +19,10 @@ import store from "./store/store";
 const theme = createTheme({
   palette: {
     primary: {
-      main: amber[600],
+      main: amber[300],
     },
     secondary: {
-      main: lightBlue[800],
+      main: lightBlue[600],
     },
   },
 });
