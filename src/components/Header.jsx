@@ -1,6 +1,6 @@
 import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../auth/firebase";
@@ -42,17 +42,26 @@ const Header = () => {
     setAnchorOpen(!anchorOpen)
   }
 
+  const setNavBarDisplay = () => {
+    if (user) {
+      return "space-between"
+    }
+    else {
+      return "flex-end"
+    }
+  }
+
   const navBarItems = (
-    <Toolbar sx={{ backgroundColor: "secondary.main" }}>
+    <Toolbar sx={{ backgroundColor: "secondary.main", display: "flex", justifyContent: setNavBarDisplay() }}>
       {user ? (
         <Typography >
           Logged in as <strong>{loggedUsername}</strong>
         </Typography>
       ) : null}
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-        <Link to="/">
-          <Button variant="text">Home</Button>
-        </Link>
+        <NavLink to="/">
+          <Button variant="text" >Home</Button>
+        </NavLink>
         <Link to="/countries">
           <Button variant="text">Countries</Button>
         </Link>
