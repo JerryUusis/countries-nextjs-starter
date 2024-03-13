@@ -1,8 +1,5 @@
-import { Button } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Row from "react-bootstrap/Row";
+import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -13,7 +10,8 @@ import { useEffect, useState } from "react";
 const Header = () => {
   const [user] = useAuthState(auth);
   const [loggedUsername, setLoggedUsername] = useState("");
-  
+  const [anchorOpen, setAnchorOpen] = useState(false);
+
   useEffect(() => {
     try {
       const userRef = collection(db, "users");
@@ -38,48 +36,98 @@ const Header = () => {
     if (!user) {
       setLoggedUsername("")
     }
-  },[user])
+  }, [user])
+
+  const toggleDrawer = () => {
+    setAnchorOpen(!anchorOpen)
+  }
+
+  const navBarItems = (
+    <Toolbar sx={{ backgroundColor: "secondary.main" }}>
+      {user ? (
+        <Typography >
+          Logged in as <strong>{loggedUsername}</strong>
+        </Typography>
+      ) : null}
+      <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+        <Link to="/">
+          <Button variant="text">Home</Button>
+        </Link>
+        <Link to="/countries">
+          <Button variant="text">Countries</Button>
+        </Link>
+        <Link to="/favourites">
+          <Button variant="text">Favourites</Button>
+        </Link>
+        {!user ? (
+          <>
+            <Link to="/register">
+              <Button variant="text">Register</Button>
+            </Link>
+            <Link to="/login">
+              <Button variant="text">Login</Button>
+            </Link>
+          </>
+        ) : (
+          <Button onClick={logout}>Sign out</Button>
+        )}
+      </Box>
+      <Box sx={{ display: { xs: "block", sm: "none" } }}>
+        <IconButton
+          size="large"
+          edge="end"
+          sx={{ color: "primary.main" }}
+          onClick={toggleDrawer}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Box>
+    </Toolbar>
+  )
+
+  const hamburgerItems = (
+    <Box width={200}>
+      <ListItem component={Link} to="/" onClick={toggleDrawer}>
+        <ListItemText primary="Home" />
+      </ListItem>
+      <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
+        <ListItemText primary="Countries" />
+      </ListItem>
+      <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
+        <ListItemText primary="Favourites" />
+      </ListItem>
+      {!user ? (
+        <>
+          <ListItem component={Link} to="/register" onClick={toggleDrawer}>
+            <ListItemText primary="Register" />
+          </ListItem>
+          <ListItem component={Link} to="/login" onClick={toggleDrawer}>
+            <ListItemText primary="Login" />
+          </ListItem>
+        </>
+      ) : (
+        <ListItem component={Link} onClick={logout} >
+          <ListItemText primary="Sign out" />
+        </ListItem>
+      )}
+    </Box>
+  );
 
   return (
-    <Container fluid>
-      <Row>
-        <Navbar bg="light" variant="light">
-          <Container className="justify-content-end">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav>
-                {user ? (
-                  <p >
-                    Logged in as <strong>{loggedUsername}</strong>
-                  </p>
-                ) : null}
-                <Link to="/">
-                  <Button variant="contained">Home</Button>
-                </Link>
-                <Link to="/countries">
-                  <Button variant="contained">Countries</Button>
-                </Link>
-                <Link to="/favourites">
-                  <Button variant="contained">Favourites</Button>
-                </Link>
-                {!user ? (
-                  <>
-                    <Link to="/register">
-                      <Button variant="contained">Register</Button>
-                    </Link>
-                    <Link to="/login">
-                      <Button variant="contained">Login</Button>
-                    </Link>
-                  </>
-                ) : (
-                  <Button onClick={logout}>Sign out</Button>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Row>
-    </Container>
+    <Box sx={{ flexGrow: 1, top: 0, zIndex: "100" }} position="sticky">
+      <AppBar position="static">
+        {navBarItems}
+      </AppBar>
+      <Drawer
+        anchor="right"
+        open={anchorOpen}
+        onClose={toggleDrawer}
+      >
+        <List>
+          {hamburgerItems}
+        </List>
+      </Drawer>
+    </Box>
   );
 };
 
