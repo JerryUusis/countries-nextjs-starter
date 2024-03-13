@@ -32,14 +32,13 @@ const Countries = () => {
     if (!languagesObject) {
       return []
     }
-    
-    const formattedLanguages = [];
 
-    if (formatLanguages.length === 0) {
+    const languages = Object.values(languagesObject);
+    if (languages.length === 0) {
       return [];
     }
-    const languages = Object.values(languagesObject)
 
+    const formattedLanguages = [];
     if (languages.length === 1) {
       return languages;
     }
@@ -55,6 +54,37 @@ const Countries = () => {
       }
     }
     return formattedLanguages
+  }
+
+  const formatCurrencies = (currencyObject) => {
+    if (!currencyObject) {
+      return [];
+    }
+
+    const currencies = Object.values(currencyObject);
+
+    if (currencies.length === 0) {
+      return [];
+    }
+
+    if (currencies.length === 1) {
+      return currencies[0].name;
+    }
+    else {
+      const formattedCurrencies = [];
+      for (let i = 0; i < currencies.length; i++) {
+        if (i === currencies.length - 1) {
+          formattedCurrencies.push(currencies[i].name);
+        }
+        else if (i === currencies.length - 2) {
+          formattedCurrencies.push(currencies[i].name + " & ")
+        }
+        else {
+          formattedCurrencies.push(currencies[i].name + ", ")
+        }
+      }
+      return formattedCurrencies;
+    }
   }
 
   return (
@@ -92,9 +122,7 @@ const Countries = () => {
                       {formatLanguages(country.languages)}
                     </ListItem>
                     <ListItem>
-                      {Object.values(country.currencies || {})
-                        .map((currency) => currency.name)
-                        .join(", ")}
+                      {formatCurrencies(country.currencies)}
                     </ListItem>
                     <ListItem>
                       {country.population.toLocaleString()}
