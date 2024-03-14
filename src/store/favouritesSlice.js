@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addFavouriteToFirebase,
   removeFavouriteFromFirebase,
+  clearFavouritesFromFirebase,
   auth
 } from "../auth/firebase"
 
@@ -24,6 +25,7 @@ export const favouritesSlice = createSlice({
     },
     clearFavourites(state, action) {
       state.favourites = [];
+      clearFavouritesFromFirebase(action.payload);
     },
     // Find the index of payload and remove it from the state. If user is logged, remove it from the database.
     removeFavourite(state, action) {
