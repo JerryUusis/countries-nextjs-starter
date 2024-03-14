@@ -1,16 +1,27 @@
 import { Box, Card, CardMedia, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import TranslateIcon from '@mui/icons-material/Translate';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
-import { addFavourite } from "../store/favouritesSlice";
-import { useDispatch } from "react-redux";
+import { addFavourite, removeFavourite } from "../store/favouritesSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CountryCard = ({ country }) => {
   // Flag is in 2∶1 in aspect ratio. Use this value to adjust the scale the flag size correctly.
   const FLAG_HEIGHT = 130;
   const dispatch = useDispatch();
+
+  const favourites = useSelector((state) => state.favourites.favourites);
+
+  const handleAddFavouriteClick = () => {
+    dispatch(addFavourite(country.name.common))
+  }
+
+  const handleRemoveFavouriteClick = () => {
+    dispatch(removeFavourite(country.name.common));
+  }
 
   const formatLanguages = (languagesObject) => {
     if (!languagesObject) {
@@ -73,15 +84,20 @@ const CountryCard = ({ country }) => {
 
   const iconContainerProps = { display: "flex", alignItems: "flex-start", gap: "0.25rem" }
   const smallIconProps = { fontSize: "0.9rem", opacity: "0.5" }
+  const favouriteIconProps = { position: "absolute", top: 0, right: 0, m: "0.125rem", cursor: "pointer", color: "#FF69B4" }
 
   return (
     <Box key={country.name.common}>
       <Card sx={{ height: "350px", width: `${FLAG_HEIGHT * 2}px`, display: "flex", flexDirection: "column" }}>
         <Box position={"relative"}>
-          <FavoriteIcon
-            onClick={() => dispatch(addFavourite(country))}
-            sx={{ position: "absolute", top: 0, right: 0, m: "0.125rem", cursor: "pointer" }}
-          />
+          {favourites.includes(country.name.common) ?
+            <FavoriteIcon
+              onClick={handleRemoveFavouriteClick}
+              sx={favouriteIconProps} /> :
+            <FavoriteBorderIcon
+              onClick={handleAddFavouriteClick}
+              sx={favouriteIconProps}
+            />}
           <Link
             to={`/countries/${country.name.common}`}
             state={{ country: country }}

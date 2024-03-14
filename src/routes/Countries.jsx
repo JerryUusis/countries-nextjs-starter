@@ -3,6 +3,7 @@ import { Box, TextField, CircularProgress, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import CountryCard from "../components/CountryCard";
+import { getFavouritesFromSource } from "../auth/firebase";
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Countries = () => {
 
   useEffect(() => {
     dispatch(initializeCountries());
+    dispatch(getFavouritesFromSource());
   }, [dispatch]);
 
   if (loading) {
