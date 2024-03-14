@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
-import { removeFavourite, clearFavourites } from "../store/favouritesSlice";
-import { getFavouritesFromSource } from "../auth/firebase";
+import { clearFavourites } from "../store/favouritesSlice";
+import { getFavouritesFromSource, auth } from "../auth/firebase";
 import CountryCard from "../components/CountryCard"
 
 const Favourites = () => {
@@ -23,29 +23,26 @@ const Favourites = () => {
     useEffect(() => {
         dispatch(initializeCountries());
         dispatch(getFavouritesFromSource());
+        dispatch(initializeCountries(auth.currentUser.uid));
     }, [dispatch]);
-
-    const handleRemoveFavourite = (countryName) => {
-        dispatch(removeFavourite(countryName))
-    }
 
     const handleClearFavourites = () => {
-        dispatch(clearFavourites())
+        dispatch(clearFavourites(auth.currentUser.uid))
     }
-
-    useEffect(() => {
-        dispatch(initializeCountries());
-        dispatch(getFavouritesFromSource());
-    }, [dispatch]);
 
     return (
         <Box my={"2rem"}>
-            <Box sx={{ 
-                display: "flex", 
-                flexDirection: "column", 
-                alignItems: "center", 
-                gap: "2rem" }}>
-                <Button variant="contained" color="secondary" onClick={() => handleClearFavourites()}>Clear favourites</Button>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "2rem"
+            }}>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleClearFavourites()}>
+                    Clear favourites</Button>
                 <Box sx={{
                     display: "flex",
                     flexFlow: "wrap",
@@ -53,7 +50,7 @@ const Favourites = () => {
                     justifyContent: "center"
                 }}>
                     {countriesList.map((country) => (
-                        <CountryCard country={country} />
+                        <CountryCard key={country.name.common} country={country} />
                     ))}
                 </Box>
             </Box>
