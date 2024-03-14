@@ -17,7 +17,7 @@ const CountryCard = ({ country }) => {
 
   const handleFavouriteClick = () => {
     setFavourite(!favourite)
-    dispatch(addFavourite(country))
+    dispatch(addFavourite(country.name.common))
   }
 
   const formatLanguages = (languagesObject) => {
