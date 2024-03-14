@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Box, Card, CardMedia, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -7,21 +6,20 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
 import { addFavourite, removeFavourite } from "../store/favouritesSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CountryCard = ({ country }) => {
-  const [favourite, setFavourite] = useState(false)
   // Flag is in 2∶1 in aspect ratio. Use this value to adjust the scale the flag size correctly.
   const FLAG_HEIGHT = 130;
   const dispatch = useDispatch();
 
+  const favourites = useSelector((state) => state.favourites.favourites);
+
   const handleAddFavouriteClick = () => {
-    setFavourite(!favourite);
     dispatch(addFavourite(country.name.common))
   }
 
   const handleRemoveFavouriteClick = () => {
-    setFavourite(!favourite);
     dispatch(removeFavourite(country.name.common));
   }
 
@@ -92,7 +90,7 @@ const CountryCard = ({ country }) => {
     <Box key={country.name.common}>
       <Card sx={{ height: "350px", width: `${FLAG_HEIGHT * 2}px`, display: "flex", flexDirection: "column" }}>
         <Box position={"relative"}>
-          {favourite ?
+          {favourites.includes(country.name.common) ?
             <FavoriteIcon
               onClick={handleRemoveFavouriteClick}
               sx={favouriteIconProps} /> :
