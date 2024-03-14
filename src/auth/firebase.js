@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { addDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
 const { VITE_FIREBASE_API } = import.meta.env;
+import { getFavourites } from "../store/favouritesSlice";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -86,5 +87,14 @@ export const addFavouriteToFirebase = async (uid, name) => {
         console.log("Error adding favorutie to Firebase database: ", error)
     }
 }
+
+export const getFavouritesFromSource = () => async (dispatch) => {
+    const user = auth.currentUser;
+    if (user) {
+        const q = await getDocs(collection(db, `users/${user.uid}/favourites`));
+        const favourites = q.docs.map((doc) => doc.data().name);
+        dispatch(getFavourites(favourites));
+    }
+};
 
 export { registerWithEmailAndPassword, auth, db }
