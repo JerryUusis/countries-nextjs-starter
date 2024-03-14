@@ -11,6 +11,9 @@ export const favouritesSlice = createSlice({
     favourites: [],
   },
   reducers: {
+    getFavourites(state, action) {
+      state.favourites = action.payload;
+    },
     // Check if payload exists in the state and add it to the state. If user is logged in, add it to the database.
     addFavourite(state, action) {
       if (!state.favourites.some((fav) => fav === action.payload)) {
@@ -37,7 +40,7 @@ export const favouritesSlice = createSlice({
   },
 });
 
-export const { addFavourite, clearFavourites, removeFavourite } =
+export const { getFavourites, addFavourite, clearFavourites, removeFavourite } =
   favouritesSlice.actions;
 
 export default favouritesSlice.reducer;
