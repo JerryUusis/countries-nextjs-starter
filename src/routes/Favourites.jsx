@@ -39,12 +39,23 @@ const Favourites = () => {
     }, [dispatch]);
 
     return (
-        <Box >
-            <Button variant="contained" color="secondary" onClick={() => handleClearFavourites()}>Clear favourites</Button>
-            <Box>
-                {countriesList.map((country) => (
-                    <CountryCard country={country}/>
-                ))}
+        <Box my={"2rem"}>
+            <Box sx={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                alignItems: "center", 
+                gap: "2rem" }}>
+                <Button variant="contained" color="secondary" onClick={() => handleClearFavourites()}>Clear favourites</Button>
+                <Box sx={{
+                    display: "flex",
+                    flexFlow: "wrap",
+                    gap: "1rem",
+                    justifyContent: "center"
+                }}>
+                    {countriesList.map((country) => (
+                        <CountryCard country={country} />
+                    ))}
+                </Box>
             </Box>
         </Box>
     );
