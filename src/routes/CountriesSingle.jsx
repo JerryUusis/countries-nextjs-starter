@@ -1,4 +1,4 @@
-import { Container, Button, Col, Image, Row, Spinner } from "react-bootstrap";
+import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +16,7 @@ const CountriesSingle = () => {
   useEffect(() => {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=${VITE_OPENWEATHER_API}`)
       .catch((error) => {
-        // console.log(error)
+        console.log(error)
         setError(true)
       })
       .then((response) => {
@@ -25,52 +25,50 @@ const CountriesSingle = () => {
       })
   }, [country.capital])
 
-  // console.log(weather)
   if (loading) {
     return (
-      <Col className="text-center m-5">
-        <Spinner
-          animation="border"
-          role="status"
-          className="center"
-          variant="info">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Col>
+      <Box className="text-center m-5">
+        <span className="visually-hidden">Loading...</span>
+        <CircularProgress color="secondary" size="3rem" />
+      </Box>
     )
   }
 
   return (
-    <Container>
-      <Row className="m-5">
-        <Col>
-        {""}
-          <Image
-            thumbnail
-            src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}></Image>
-        </Col>
-        <Col>
-          <h2 className="display-4">{country.name.common}</h2>
-          <h3>Capital: {country.capital}</h3>
+    <Box>
+      <Box >
+        <Box>
+          <Box sx={{
+            backgroundImage: `url(https://source.unsplash.com/featured/1600x900?${country.name.common})`,
+            height: "337.5px",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            maxWidth: "600px"
+          }}
+            alt={`Picture from ${country.name.common}`}></Box >
+        </Box>
+        <Box>
+          <Typography sx={{ fontWeight: "bold" }}>{country.name.common}</Typography>
+          <Typography>Capital: {country.capital}</Typography>
           {!error && weather && (
-            <div>
-              <p>
+            <Box>
+              <Typography>
                 Right now it is <strong>{weather.main.temp}</strong>{" "}
                 degrees in {country.capital} and {" "} {weather.weather[0].description}
-              </p>
+              </Typography>
               <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} />
-            </div>
+            </Box>
           )}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-        <Button variant="light" onClick={() => navigate("/countries")}>
+        </Box>
+      </Box>
+      <Box>
+        <Box>
+          <Button variant="contained" color="secondary" onClick={() => navigate("/countries")}>
             Back to countries
-        </Button>
-        </Col>
-      </Row>
-    </Container>
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
