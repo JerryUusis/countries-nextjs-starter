@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { addDoc, collection, getFirestore } from "firebase/firestore"
+import { addDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
 const { VITE_FIREBASE_API } = import.meta.env;
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -53,4 +53,15 @@ export const logout = () => {
     auth.signOut()
 }
 
-export {registerWithEmailAndPassword, auth, db}
+// Creates a new document named uid that containes a collection called "favourites"
+export const addFavouriteToFirebase = async (uid, name) => {
+    try {
+        await addDoc(collection(db, `users/${uid}/favourites`), { name });
+        console.log("Favourite added to Firebase database");
+    }
+    catch (error) {
+        console.log("Error adding favorutie to Firebase database: ", error)
+    }
+}
+
+export { registerWithEmailAndPassword, auth, db }
