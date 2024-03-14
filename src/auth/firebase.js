@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { addDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
+import { addDoc, deleteDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
 const { VITE_FIREBASE_API } = import.meta.env;
 import { getFavourites } from "../store/favouritesSlice";
 // TODO: Add SDKs for Firebase products that you want to use

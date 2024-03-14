@@ -6,7 +6,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import TranslateIcon from '@mui/icons-material/Translate';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
-import { addFavourite } from "../store/favouritesSlice";
+import { addFavourite, removeFavourite } from "../store/favouritesSlice";
 import { useDispatch } from "react-redux";
 
 const CountryCard = ({ country }) => {
@@ -15,9 +15,14 @@ const CountryCard = ({ country }) => {
   const FLAG_HEIGHT = 130;
   const dispatch = useDispatch();
 
-  const handleFavouriteClick = () => {
-    setFavourite(!favourite)
+  const handleAddFavouriteClick = () => {
+    setFavourite(!favourite);
     dispatch(addFavourite(country.name.common))
+  }
+
+  const handleRemoveFavouriteClick = () => {
+    setFavourite(!favourite);
+    dispatch(removeFavourite(country.name.common));
   }
 
   const formatLanguages = (languagesObject) => {
@@ -89,10 +94,10 @@ const CountryCard = ({ country }) => {
         <Box position={"relative"}>
           {favourite ?
             <FavoriteIcon
-              onClick={handleFavouriteClick}
+              onClick={handleRemoveFavouriteClick}
               sx={favouriteIconProps} /> :
             <FavoriteBorderIcon
-              onClick={handleFavouriteClick}
+              onClick={handleAddFavouriteClick}
               sx={favouriteIconProps}
             />}
           <Link
