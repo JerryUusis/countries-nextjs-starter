@@ -40,6 +40,29 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     }
 };
 
+export const removeFavouriteFromFirebase = async (uid, name) => {
+    console.log("Name:", name);
+    try {
+        if (!name) {
+            console.error(
+                "Error removing favourite from Firebase database: name parameter is undefined"
+            );
+            return;
+        }
+        const q = query(
+            collection(db, `users/${uid}/favourites`),
+            where("name", "==", name)
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            deleteDoc(doc.ref);
+            console.log("Favourite removed from Firebase database", doc.ref)
+        })
+    } catch (error) {
+        console.error("Error removing favourite from Firebase database: ", error)
+    }
+}
+
 export const loginWithEmailAndPassword = async (email, password) => {
     try {
         await signInWithEmailAndPassword(auth, email, password)
