@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  addFavouriteToFirebase, auth
+} from "../auth/firebase"
 
 export const favouritesSlice = createSlice({
   name: "favourites",
@@ -7,13 +10,12 @@ export const favouritesSlice = createSlice({
   },
   reducers: {
     addFavourite(state, action) {
-      if (
-        state.favourites.some(
-          (favourite) => favourite.name.common === action.payload.name.common
-        )
-      )
-        return;
+      if (state.favourites.some((favourite) => favourite === action.payload))
+        state.favourites = [...state.favourites];
       state.favourites = [...state.favourites, action.payload];
+
+      const user = auth.currentUser;
+      if (user) addFavouriteToFirebase(user.uid, action.payload);
     },
     clearFavourites(state, action) {
       state.favourites = [];
