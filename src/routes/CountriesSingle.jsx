@@ -29,6 +29,9 @@ const CountriesSingle = () => {
 
   const getNeighbouringCountries = () => {
     const neighbouringCountries = [];
+    if (!country.borders) {
+      return []
+    }
 
     if (country.borders.length === 0) {
       return []
@@ -93,8 +96,12 @@ const CountriesSingle = () => {
                     <TableRow sx={{ backgroundColor: "lightGrey" }}>
                       {screenSizeSm ?
                         (<>
-                          <TableCell><img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", padding: "0.25rem" }} /></TableCell>
-                          <TableCell><img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", padding: "0.25rem" }} /></TableCell>
+                          <TableCell>
+                            <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", padding: "0.25rem" }} />
+                          </TableCell>
+                          <TableCell>
+                            <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", padding: "0.25rem" }} />
+                          </TableCell>
                         </>)
                         :
                         (<TableCell colSpan={2} align="center" >
@@ -128,10 +135,11 @@ const CountriesSingle = () => {
                       <TableCell>Population</TableCell>
                       <TableCell>{country.population.toLocaleString()}</TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>Bordering countries</TableCell>
-                      <TableCell>{neighbouringCountries}</TableCell>
-                    </TableRow>
+                    {neighbouringCountries.length > 0 ?
+                      <TableRow>
+                        <TableCell>Bordering countries</TableCell>
+                        <TableCell>{neighbouringCountries}</TableCell>
+                      </TableRow> : null}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -152,12 +160,14 @@ const CountriesSingle = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell rowSpan={2} align="center"><img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].main} /></TableCell>
+              <TableRow >
+                <TableCell rowSpan={2} align="center">
+                  <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].main} />
+                </TableCell>
                 <TableCell>Current {weather.main.temp}°C</TableCell>
                 <TableCell>{weather.wind.speed} m/s</TableCell>
               </TableRow>
-              <TableRow>
+              <TableRow >
                 <TableCell>Highest {weather.main.temp_max}°C</TableCell>
                 <TableCell>Highest {weather.wind.gust} m/s</TableCell>
               </TableRow>
