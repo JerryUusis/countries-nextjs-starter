@@ -5,10 +5,11 @@ import axios from "axios";
 const { VITE_OPENWEATHER_API, VITE_GOOGLE_API, VITE_GOOGLE_MAP_ID } = import.meta.env;
 import AirIcon from '@mui/icons-material/Air';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
-import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow, } from "@vis.gl/react-google-maps"; //https://visgl.github.io/react-google-maps/
+import { APIProvider, Map } from "@vis.gl/react-google-maps"; //https://visgl.github.io/react-google-maps/
 import { formatLanguages, formatCurrencies } from "../components/CountryCard";
 import { initializeCountries } from "../store/countriesSlice";
 import { useSelector, useDispatch } from "react-redux";
+import NavigationIcon from '@mui/icons-material/Navigation';
 
 const CountriesSingle = () => {
   const [weather, setWeather] = useState("");
@@ -69,7 +70,9 @@ const CountriesSingle = () => {
       </Box>
     )
   }
+
   const position = { lat: weather.coord.lat, lng: weather.coord.lon };
+  const windAngle = weather.wind.deg;
 
   return (
     <Box sx={{
@@ -90,17 +93,17 @@ const CountriesSingle = () => {
             }}>
             </Box>
             <Box my={"2rem"}>
-              <TableContainer component={Paper} sx={{ maxWidth: "550px" }}>
+              <TableContainer component={Paper} sx={{}}>
                 <Table>
                   <TableHead>
                     <TableRow sx={{ backgroundColor: "lightGrey" }}>
                       {screenSizeSm ?
                         (<>
                           <TableCell>
-                            <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", padding: "0.25rem" }} />
+                            <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
                           </TableCell>
                           <TableCell>
-                            <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", padding: "0.25rem" }} />
+                            <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
                           </TableCell>
                         </>)
                         :
@@ -121,7 +124,7 @@ const CountriesSingle = () => {
                   <TableBody>
                     <TableRow>
                       <TableCell>Capital</TableCell>
-                      <TableCell>{country.capital} {position.lat.toFixed(2)}°N {position.lng.toFixed(2)}°E</TableCell>
+                      <TableCell>{country.capital} {position.lat.toFixed(2)}°N, {position.lng.toFixed(2)}°E</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Official languages</TableCell>
@@ -150,7 +153,7 @@ const CountriesSingle = () => {
         </Box>
       )}
       <Box>
-        <TableContainer component={Paper} sx={{ maxWidth: "550px" }}>
+        <TableContainer component={Paper} >
           <Table>
             <TableHead>
               <TableRow>
@@ -164,17 +167,19 @@ const CountriesSingle = () => {
                 <TableCell rowSpan={2} align="center">
                   <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].main} />
                 </TableCell>
-                <TableCell>Current {weather.main.temp}°C</TableCell>
-                <TableCell>{weather.wind.speed} m/s</TableCell>
+                <TableCell>Current {weather.main.temp.toFixed(0)}°C</TableCell>
+                <TableCell>
+                  {weather.wind.speed.toFixed(0)} m/s <NavigationIcon sx={{ ml: "0.125rem", transform: `rotate(${windAngle}deg)`, fontSize: "1rem", opacity: "0.75" }} />
+                </TableCell>
               </TableRow>
               <TableRow >
-                <TableCell>Highest {weather.main.temp_max}°C</TableCell>
-                <TableCell>Highest {weather.wind.gust} m/s</TableCell>
+                <TableCell>Max {weather.main.temp_max.toFixed(0)}°C</TableCell>
+                <TableCell>Feels like {weather.main.feels_like.toFixed(0)}°C</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>{weather.weather[0].main}</TableCell>
-                <TableCell>Lowest {weather.main.temp_min}°C</TableCell>
-                <TableCell>Feels like {weather.main.feels_like}°C</TableCell>
+                <TableCell>Min {weather.main.temp_min.toFixed(0)}°C</TableCell>
+                <TableCell>Humidity {weather.main.humidity} %</TableCell>
               </TableRow>
             </TableBody>
           </Table>
