@@ -66,20 +66,7 @@ const CountriesSingle = () => {
       </Box>
     )
   }
-
-  // const formatTime = (timeUnix) => {
-  //   const dateObject = new Date(timeUnix * 1000);
-  //   const hours = dateObject.getUTCHours();
-  //   const minutes = dateObject.getUTCMinutes();
-  //   return `${hours.toString().padStart(2, '0')}.${minutes.toString().padStart(2, '0')}`;
-  // };
-
-
-  // const sunriseTimeUnix = weather.sys.sunrise;
-  // const sunsetTimeUnix = weather.sys.sunset;
   const position = { lat: weather.coord.lat, lng: weather.coord.lon };
-
-  console.log(weather)
 
   return (
     <Box sx={{
@@ -127,7 +114,7 @@ const CountriesSingle = () => {
                   <TableBody>
                     <TableRow>
                       <TableCell>Capital</TableCell>
-                      <TableCell>{country.capital}</TableCell>
+                      <TableCell>{country.capital} {position.lat.toFixed(2)}°N {position.lng.toFixed(2)}°E</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Official languages</TableCell>
