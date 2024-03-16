@@ -2,9 +2,10 @@ import { Box, Button, Typography, CircularProgress, TableContainer, Table, Table
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-const { VITE_OPENWEATHER_API } = import.meta.env;
+const { VITE_OPENWEATHER_API, VITE_GOOGLE_API, VITE_GOOGLE_MAP_ID } = import.meta.env;
 import AirIcon from '@mui/icons-material/Air';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
+import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow, } from "@vis.gl/react-google-maps"; //https://visgl.github.io/react-google-maps/
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
@@ -48,16 +49,16 @@ const CountriesSingle = () => {
 
   // const sunriseTimeUnix = weather.sys.sunrise;
   // const sunsetTimeUnix = weather.sys.sunset;
-
-  // console.log(weather)
-
+  const position = { lat: weather.coord.lat, lng: weather.coord.lon };
+  console.log(country)
 
   return (
     <Box sx={{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap:"3rem"
+      gap: "3rem",
+      my: "2rem"
     }}>
       {/* <Box sx={{
         backgroundImage: `url(https://source.unsplash.com/featured/1600x900?${country.name.common})`,
@@ -72,20 +73,20 @@ const CountriesSingle = () => {
         <Box >
           <Box sx={{ display: "flex", gap: "2rem", alignItems: "flex-end" }}>
             <Box>
+              <Typography sx={{ fontWeight: "bold" }}>{country.name.common} {country.flag}</Typography>
+              <Typography>Capital: {country.capital}</Typography>
+            </Box>
+            <Box>
               <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} />
               <Typography >{weather.weather[0].description}</Typography>
               <Typography>Humidity {weather.main.humidity}%</Typography>
-            </Box>
-            <Box>
-              <Typography sx={{ fontWeight: "bold" }}>{country.name.common}</Typography>
-              <Typography>Capital: {country.capital}</Typography>
             </Box>
 
           </Box>
         </Box>
       )}
       <Box>
-      <Typography>Current Weather</Typography>
+        <Typography>Current Weather</Typography>
         <TableContainer component={Paper} sx={{ maxWidth: "550px" }}>
           <Table>
             <TableHead>
@@ -112,9 +113,23 @@ const CountriesSingle = () => {
         </TableContainer>
       </Box>
       <Button variant="contained" color="secondary" onClick={() => navigate("/countries")}>
-          Back to countries
-        </Button>
-    </Box>
+        Back to countries
+      </Button>
+      <APIProvider apiKey={VITE_GOOGLE_API} >
+        <Box sx={{
+          height: {
+            xs: "300px",
+            sm: "500px"
+          },
+          width: {
+            xs:"300px",
+            sm: "500px"
+          }
+        }} >
+          <Map defaultZoom={8} defaultCenter={position} mapId={VITE_GOOGLE_MAP_ID} />
+        </Box>
+      </APIProvider >
+    </Box >
   );
 };
 
