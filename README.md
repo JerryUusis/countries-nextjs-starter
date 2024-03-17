@@ -1,40 +1,52 @@
-## Begin Countries Application setup...
+# Countries application
 
-### Steps:
+## Overview
 
-1. Install react-redux and react-redux toolkit
-   Install react-redux and @reduxjs/toolkit using npm or yarn. These libraries will be used to manage the state of your application.
+This project is a web application built with React.js and Material-UI to explore countries around the world. Users can search for their favorite destinations, discover information such as languages, currencies, and population, and save their favorite countries for quick access. 
 
-```shell
-npm install react-redux @reduxjs/toolkit
+## Features
+
+- Search for countries by name.
+- View detailed information about each country, including its flag, official name, languages, currencies, and population.
+- Save favorite countries for quick access.
+- Responsive design for seamless usage on various devices.
+- User authentication/login
+- Users can add favourite countries and they get stored in the database
+
+Data on the page is being fetched from [Open Weather API](https://openweathermap.org/) and [REST Countries](https://restcountries.com/)
+
+
+## Technologies used
+
+- React.js + Vite
+- React Router
+- Material-UI
+- Emotion
+- Firebase
+- Redux Toolkit
+
+## Setup and usage
+
+You can go check the page live in [here](https://willowy-parfait-1cc23c.netlify.app)
+
+or you can clone the project. Run these commands in your terminal:
+
+1. **Clone the project**
+```bash
+git clone https://github.com/JerryUusis/countries-nextjs-starter.git
+```
+2. **Install dependencies**. Navigate to the project folder and run the following command to install the necessary dependencies:
+
+```bash
+npm install
 ```
 
-2. Signup for weather api at: https://home.openweathermap.org/users/sign_up
-   Sign up for the OpenWeatherMap API at https://home.openweathermap.org/users/sign_up. You will receive an API key which will be used to fetch weather data. The signup means we have to wait 2 hours for the API key to be available. We will not be using this right away.
+3. **Run the development server**. Start the development server by running:
 
-**_ We will do this step together _** 3. Set up store, slice and (do api call together - service)
-Set up your Redux store and create a slice for your countries data. In the slice, define actions and reducers to handle the fetching of country data. You can use createAsyncThunk from Redux Toolkit to handle the API call.
+```bash
+npm run dev
+```
 
-4. Test that redux in chrome is showing the empty countries array.
-   Test your Redux setup by checking the Redux DevTools in your browser.
+This will launch the application on your local machine. By default, you can access it at localhost:5173 in your web browser.
 
-5. Connect Countries.jsx to store and replace the countriesList and loading with values from redux.
-   In your Countries.jsx component, connect to the Redux store using the useSelector and useDispatch hooks from react-redux. Replace the local countriesList and loading state with values from the Redux store.
-
-6. Use framework component to fetch data and display.
-
-7. Create search function for all countries
-   Implement a search function that filters the list of countries based on the user's input. This could be done in the Redux slice or in the component itself, depending on your preference.
-
-Think about the steps carefully here... which part should we do first and why? Do we map and then filter or filter and then map for example?
-Think of your reason...
-
-8. Create link container and add in link for single page later (suggested wrapping Card.Img)
-   Create a link container component that wraps around each country item. This component should use the Link component from react-router-dom to navigate to a detailed view of the country when clicked. It's suggested to wrap the Card.Img component with this link container.
-
-**_ We will do this step together _** 9. Set up country single.
-
-
-## Documentation for countries API
-
-https://restcountries.com/#endpoints-all
+## Screenshot
