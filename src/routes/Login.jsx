@@ -38,6 +38,7 @@ const Login = () => {
                     placeholder="Password"
                     label="Password"
                     onChange={(event) => setPassword(event.target.value)}
+                    color="secondary"
                 />
                 <Button onClick={login} color="secondary" variant="contained">Login</Button>
             </Box>
