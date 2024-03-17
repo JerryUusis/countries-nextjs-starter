@@ -22,7 +22,7 @@ const Login = () => {
 
     return (
         <Box sx={{ width: "100vw", height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" } }}>
-            <Box sx={{ display: "flex", flexDirection: "column",gap:"2rem", justifyContent: "center", alignItems: "center", height: "100%" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem", justifyContent: "center", alignItems: "center", height: "100%" }}>
                 <Typography variant="h1" sx={{ fontSize: "2rem" }} component={"h1"}>Login</Typography >
                 <TextField
                     type="text"
