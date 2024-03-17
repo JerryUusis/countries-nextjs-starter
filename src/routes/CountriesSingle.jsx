@@ -1,6 +1,6 @@
 import { Box, Button, Typography, CircularProgress, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, useMediaQuery } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 const { VITE_OPENWEATHER_API, VITE_GOOGLE_API, VITE_GOOGLE_MAP_ID } = import.meta.env;
 import AirIcon from '@mui/icons-material/Air';
@@ -30,25 +30,21 @@ const CountriesSingle = () => {
 
   const getNeighbouringCountries = () => {
     const neighbouringCountries = [];
-    if (!country.borders) {
-      return []
-    }
-
-    if (country.borders.length === 0) {
-      return []
+    if (!country.borders || country.borders.length === 0 ) {
+      return neighbouringCountries
     }
 
     for (const countryCioc of country.borders) {
-      countriesList.forEach((country) => {
-        if (countryCioc === country.cioc) {
-          neighbouringCountries.push(`${country.name.common} ${country.flag}`)
+      countriesList.forEach((neighbour) => {
+        if (countryCioc === neighbour.cioc) {
+          neighbouringCountries.push(<Link to={`/countries/${neighbour.name.common}`} state={{country: neighbour}}>{neighbour.name.common} {neighbour.flag}</Link>)
         }
       })
     }
     return neighbouringCountries
   }
 
-  const neighbouringCountries = formatLanguages(getNeighbouringCountries())
+  const neighbouringCountries = getNeighbouringCountries()
 
   useEffect(() => {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=${VITE_OPENWEATHER_API}`)
@@ -141,7 +137,7 @@ const CountriesSingle = () => {
                     {neighbouringCountries.length > 0 ?
                       <TableRow>
                         <TableCell>Bordering countries</TableCell>
-                        <TableCell>{neighbouringCountries}</TableCell>
+                        <TableCell>{getNeighbouringCountries()}</TableCell>
                       </TableRow> : null}
                   </TableBody>
                 </Table>
