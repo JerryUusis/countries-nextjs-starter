@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth, loginWithEmailAndPassword } from "../auth/firebase"
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Box, Typography, TextField, Button } from "@mui/material";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -21,22 +21,27 @@ const Login = () => {
     }, [loading, user])
 
     return (
-        <div>
-            <h1>Login</h1>
-            <input
-                type="text"
-                value={email}
-                placeholder="Email"
-                onChange={(event) => setEmail(event.target.value)}
-            />
-            <input
-                type="password"
-                value={password}
-                placeholder="Password"
-                onChange={(event) => setPassword(event.target.value)}
-            />
-            <Button onClick={login} >Submit</Button>
-        </div>
+        <Box sx={{ width: "100vw", height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" } }}>
+            <Box sx={{ display: "flex", flexDirection: "column",gap:"2rem", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                <Typography variant="h1" sx={{ fontSize: "2rem" }} component={"h1"}>Login</Typography >
+                <TextField
+                    type="text"
+                    value={email}
+                    placeholder="Email"
+                    label="Email"
+                    onChange={(event) => setEmail(event.target.value)}
+                    color="secondary"
+                />
+                <TextField
+                    type="password"
+                    value={password}
+                    placeholder="Password"
+                    label="Password"
+                    onChange={(event) => setPassword(event.target.value)}
+                />
+                <Button onClick={login} color="secondary" variant="contained">Submit</Button>
+            </Box>
+        </Box>
     )
 
 }
