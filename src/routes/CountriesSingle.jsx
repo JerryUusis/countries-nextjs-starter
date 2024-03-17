@@ -1,4 +1,4 @@
-import { Box, Button, Typography, CircularProgress, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, useMediaQuery } from "@mui/material";
+import { Box, Button, CircularProgress, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, useMediaQuery, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -30,14 +30,14 @@ const CountriesSingle = () => {
 
   const getNeighbouringCountries = () => {
     const neighbouringCountries = [];
-    if (!country.borders || country.borders.length === 0 ) {
+    if (!country.borders || country.borders.length === 0) {
       return neighbouringCountries
     }
 
     for (const countryCioc of country.borders) {
       countriesList.forEach((neighbour) => {
         if (countryCioc === neighbour.cioc) {
-          neighbouringCountries.push(<Link to={`/countries/${neighbour.name.common}`} state={{country: neighbour}}>{neighbour.name.common} {neighbour.flag}</Link>)
+          neighbouringCountries.push(<Link to={`/countries/${neighbour.name.common}`} state={{ country: neighbour }} key={neighbour.name.common}>{neighbour.name.common} {neighbour.flag}</Link>)
         }
       })
     }
@@ -76,79 +76,71 @@ const CountriesSingle = () => {
       flexDirection: "column",
       alignItems: "center",
       gap: "3rem",
-      my: "2rem"
+      mb: "2rem"
     }}>
       {!error && weather && (
         <Box >
-          <Box sx={{}}>
-            <Box sx={{
-              display: "flex", flexDirection: {
-                xs: "column",
-                sm: "row"
-              }, gap: "2rem",
-            }}>
-            </Box>
-            <Box my={"2rem"}>
-              <TableContainer component={Paper} sx={{}}>
-                <Table>
-                  <TableHead>
-                    <TableRow sx={{ backgroundColor: "lightGrey" }}>
-                      {screenSizeSm ?
-                        (<>
-                          <TableCell>
-                            <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
-                          </TableCell>
-                          <TableCell>
-                            <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
-                          </TableCell>
-                        </>)
-                        :
-                        (<TableCell colSpan={2} align="center" >
-                          <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px", marginBottom: "1rem" }} />
-                          <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
-                        </TableCell>)}
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Official name</TableCell>
-                      <TableCell >{country.name.official}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Common name</TableCell>
-                      <TableCell >{country.name.common}</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Capital</TableCell>
-                      <TableCell>{country.capital} {position.lat.toFixed(2)}°N, {position.lng.toFixed(2)}°E</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Official languages</TableCell>
-                      <TableCell>{formatLanguages(country.languages)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Official currency</TableCell>
-                      <TableCell>{formatCurrencies(country.currencies)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Population</TableCell>
-                      <TableCell>{country.population.toLocaleString()}</TableCell>
-                    </TableRow>
-                    {neighbouringCountries.length > 0 ?
-                      <TableRow>
-                        <TableCell>Bordering countries</TableCell>
-                        <TableCell>{getNeighbouringCountries()}</TableCell>
-                      </TableRow> : null}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-            <Box>
-            </Box>
-          </Box>
+          <TableContainer component={Paper} sx={{ my: { xs: "0", sm: "2rem" } }}>
+            <Table >
+              <TableHead >
+                <TableRow sx={{ backgroundColor: "lightGrey" }}>
+                  <TableCell colSpan={2} align="center">
+                    <Typography component={"h1"} sx={{ fontSize: "2rem" }}>{country.name.common}</Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow sx={{ backgroundColor: "lightGrey" }}>
+                  {screenSizeSm ?
+                    (<>
+                      <TableCell>
+                        <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
+                      </TableCell>
+                      <TableCell>
+                        <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ height: "200px" }} />
+                      </TableCell>
+                    </>)
+                    :
+                    (<TableCell colSpan={2} align="center" >
+                      <img src={country.coatOfArms.svg} alt={`${country.name.common} coat of arms`} style={{ width: "325px", marginBottom: "1rem" }} />
+                      <img src={country.flags.svg} alt={`${country.name.common} coat of arms`} style={{ width: "325px" }} />
+                    </TableCell>)}
+                </TableRow>
+                <TableRow>
+                  <TableCell>Official name</TableCell>
+                  <TableCell >{country.name.official}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Common name</TableCell>
+                  <TableCell >{country.name.common}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Capital</TableCell>
+                  <TableCell>{country.capital} {position.lat.toFixed(2)}°N, {position.lng.toFixed(2)}°E</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Official languages</TableCell>
+                  <TableCell>{formatLanguages(country.languages)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Official currency</TableCell>
+                  <TableCell>{formatCurrencies(country.currencies)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Population</TableCell>
+                  <TableCell>{country.population.toLocaleString()}</TableCell>
+                </TableRow>
+                {neighbouringCountries.length > 0 ?
+                  <TableRow>
+                    <TableCell>Bordering countries</TableCell>
+                    <TableCell>{getNeighbouringCountries()}</TableCell>
+                  </TableRow> : null}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       )}
-      <Box>
+      <Box >
         <TableContainer component={Paper} >
           <Table>
             <TableHead>
