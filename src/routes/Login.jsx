@@ -39,7 +39,7 @@ const Login = () => {
                     label="Password"
                     onChange={(event) => setPassword(event.target.value)}
                 />
-                <Button onClick={login} color="secondary" variant="contained">Submit</Button>
+                <Button onClick={login} color="secondary" variant="contained">Login</Button>
             </Box>
         </Box>
     )
