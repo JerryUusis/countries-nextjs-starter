@@ -49,6 +49,12 @@ npm run dev
 
 This will launch the application on your local machine. By default, you can access it at localhost:5173 in your web browser.
 
-## Screenshot
+## Screenshots
 
+### Desktop
 <img width="1440" alt="Screenshot 2024-03-17 at 23 10 12" src="https://github.com/JerryUusis/countries-nextjs-starter/assets/118634468/04460c5d-869b-4b19-a3f3-b244ea8ec666">
+<img width="1440" alt="Screenshot 2024-03-17 at 23 36 22" src="https://github.com/JerryUusis/countries-nextjs-starter/assets/118634468/862a4036-5e87-43da-a243-7d57f7c58bf3">
+
+### Mobile
+<img width="376" alt="Screenshot 2024-03-17 at 23 35 07" src="https://github.com/JerryUusis/countries-nextjs-starter/assets/118634468/415df449-c895-4279-8c64-cb6518760024">
+<img width="377" alt="Screenshot 2024-03-17 at 23 40 05" src="https://github.com/JerryUusis/countries-nextjs-starter/assets/118634468/d8e3443c-e73d-4412-a49a-73f3f060af4d">
