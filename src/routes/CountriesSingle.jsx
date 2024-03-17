@@ -82,7 +82,7 @@ const CountriesSingle = () => {
         <Box >
           <TableContainer component={Paper} sx={{ my: { xs: "0", sm: "2rem" } }}>
             <Table >
-              <TableHead >
+              <TableBody >
                 <TableRow sx={{ backgroundColor: "lightGrey" }}>
                   <TableCell colSpan={2} align="center">
                     <Typography component={"h1"} sx={{ fontSize: "2rem" }}>{country.name.common}</Typography>
@@ -106,34 +106,32 @@ const CountriesSingle = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Official name</TableCell>
-                  <TableCell >{country.name.official}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>{country.name.official}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Common name</TableCell>
-                  <TableCell >{country.name.common}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>{country.name.common}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
                 <TableRow>
                   <TableCell>Capital</TableCell>
-                  <TableCell>{country.capital} {position.lat.toFixed(2)}°N, {position.lng.toFixed(2)}°E</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>{country.capital} ({position.lat.toFixed(2)}°N, {position.lng.toFixed(2)}°E)</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Official languages</TableCell>
-                  <TableCell>{formatLanguages(country.languages)}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>{formatLanguages(country.languages)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Official currency</TableCell>
-                  <TableCell>{formatCurrencies(country.currencies)}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>{formatCurrencies(country.currencies)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Population</TableCell>
-                  <TableCell>{country.population.toLocaleString()}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>{country.population.toLocaleString()}</TableCell>
                 </TableRow>
                 {neighbouringCountries.length > 0 ?
                   <TableRow>
                     <TableCell>Bordering countries</TableCell>
-                    <TableCell>{getNeighbouringCountries()}</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>{getNeighbouringCountries()}</TableCell>
                   </TableRow> : null}
               </TableBody>
             </Table>
