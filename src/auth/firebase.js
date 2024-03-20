@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { addDoc, deleteDoc, collection, getFirestore, query, where, getDocs, getDoc } from "firebase/firestore"
+import { addDoc, deleteDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
 const { VITE_FIREBASE_API } = import.meta.env;
 import { getFavourites } from "../store/favouritesSlice";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -58,7 +58,8 @@ export const removeFavouriteFromFirebase = async (uid, name) => {
             deleteDoc(doc.ref);
         })
     } catch (error) {
-        console.error("Error removing favourite from Firebase database: ", error)
+        console.error("Error removing favourite from Firebase database: ", error);
+        throw error;
     }
 }
 
@@ -81,7 +82,8 @@ export const addFavouriteToFirebase = async (uid, name) => {
         await addDoc(collection(db, `users/${uid}/favourites`), { name });
     }
     catch (error) {
-        console.log("Error adding favourite to Firebase database: ", error)
+        console.log("Error adding favourite to Firebase database: ", error);
+        throw error;
     }
 }
 
