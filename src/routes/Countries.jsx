@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import CountryCard from "../components/CountryCard";
 import { getFavouritesFromSource } from "../auth/firebase";
+import AlertHandler from "../components/AlertHandler";
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Countries = () => {
 
   return (
     <Box sx={{ my: "2rem" }}>
+      <AlertHandler />
       <Box sx={{ my: "2rem", display: "flex", justifyContent: "center" }}>
         <TextField
           color="secondary"
@@ -49,7 +51,7 @@ const Countries = () => {
         justifyContent: "center"
       }}>
         {filteredCountries.length === 0 ? 
-        <Typography>No countries found with "{search}"</Typography> : 
+        <Typography>No countries found with &quot;{search}&quot;</Typography> : 
         filteredCountries.map((country) => (
           <CountryCard key={country.name.common} country={country} />
         ))}
