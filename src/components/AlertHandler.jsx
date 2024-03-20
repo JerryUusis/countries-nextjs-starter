@@ -13,15 +13,15 @@ const AlertHandler = () => {
     const hideAlertAfterDelay = () => {
         setTimeout(() => {
             dispatch(turnInvisible(false)); // Dispatch action to turn alert invisible
-        }, 2000); 
+        }, 2000);
     };
 
-    // Trigger the hideAlertAfterDelay function when faveVisible changes
+    // Trigger the hideAlertAfterDelay function when faveVisible is true
     useEffect(() => {
         if (faveVisible) {
             hideAlertAfterDelay();
         }
-    }, [faveVisible]);
+    });
 
     return (
         <Fade sx={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "5" }} in={faveVisible} timeout={250} onExited={() => dispatch(turnInvisible(false))}>
