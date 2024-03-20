@@ -36,8 +36,17 @@ export const favouritesSlice = createSlice({
       }
     },
     clearFavourites(state, action) {
-      state.favourites = [];
-      clearFavouritesFromFirebase(action.payload);
+      if (state.favourites.length !== 0) {
+        state.favourites = [];
+        clearFavouritesFromFirebase(action.payload);
+        state.alertMessage = "Favourites cleared";
+        state.alertSeverity = "success";
+        state.alertVisible = true;
+      } else {
+        state.alertMessage = "Favourites already cleared";
+        state.alertSeverity = "info";
+        state.alertVisible = true;
+      }
     },
     // Find the index of payload and remove it from the state. If user is logged, remove it from the database.
     removeFavourite(state, action) {
