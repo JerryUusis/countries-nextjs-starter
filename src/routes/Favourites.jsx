@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import { clearFavourites } from "../store/favouritesSlice";
 import { getFavouritesFromSource, auth } from "../auth/firebase";
-import CountryCard from "../components/CountryCard"
+import CountryCard from "../components/CountryCard";
+import AlertHandler from "../components/AlertHandler";
 
 const Favourites = () => {
     const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const Favourites = () => {
 
     return (
         <Box my={"2rem"}>
+            <AlertHandler />
             <Box sx={{
                 display: "flex",
                 flexDirection: "column",
