@@ -22,18 +22,25 @@ export const favouritesSlice = createSlice({
     addFavourite(state, action) {
       if (!state.favourites.some((fav) => fav === action.payload)) {
         try {
-          state.favourites = [...state.favourites, action.payload];
+          const updatedFavourites = [...state.favourites, action.payload];
           const user = auth.currentUser;
           if (user) {
             addFavouriteToFirebase(user.uid, action.payload);
           }
-          state.alertMessage = `Added ${action.payload} to favourites`;
-          state.alertSeverity = "success";
-          state.alertVisible = true;
+          return {
+            ...state,
+            favourites: updatedFavourites,
+            alertMessage: `Added ${action.payload} to favourites`,
+            alertSeverity: "success",
+            alertVisible: true
+          }
         } catch (error) {
-          state.alertMessage = error;
-          state.alertSeverity = "error";
-          state.alertVisible = true;
+          return {
+            ...state,
+            alertMessage: error,
+            alertSeverity: "error",
+            alertVisible: true
+          }
         }
       }
     },
