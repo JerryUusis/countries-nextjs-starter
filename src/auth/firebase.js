@@ -81,7 +81,7 @@ export const addFavouriteToFirebase = async (uid, name) => {
         await addDoc(collection(db, `users/${uid}/favourites`), { name });
     }
     catch (error) {
-        console.log("Error adding favorutie to Firebase database: ", error)
+        console.log("Error adding favourite to Firebase database: ", error)
     }
 }
 
