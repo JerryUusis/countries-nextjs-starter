@@ -22,13 +22,12 @@ export const favouritesSlice = createSlice({
     addFavourite(state, action) {
       if (!state.favourites.some((fav) => fav === action.payload)) {
         try {
-        state.favourites = [...state.favourites, action.payload];
-        const user = auth.currentUser;
+          state.favourites = [...state.favourites, action.payload];
+          const user = auth.currentUser;
           if (user) addFavouriteToFirebase(user.uid, action.payload);
-          state.alertMessage = `Succesfully added ${action.payload}`;
+          state.alertMessage = `Added ${action.payload} to favourites`;
           state.alertSeverity = "success";
           state.alertVisible = true;
-
         } catch (error) {
           state.alertMessage = error;
           state.alertSeverity = "error";
@@ -43,13 +42,22 @@ export const favouritesSlice = createSlice({
     // Find the index of payload and remove it from the state. If user is logged, remove it from the database.
     removeFavourite(state, action) {
       const newArray = [...state.favourites];
-      newArray.splice(
-        newArray.findIndex((element) => element === action.payload), 1);
-      state.favourites = [...newArray];
+      try {
+        newArray.splice(
+          newArray.findIndex((element) => element === action.payload), 1);
+        state.favourites = [...newArray];
 
-      const user = auth.currentUser;
-      if (user) {
-        removeFavouriteFromFirebase(user.uid, action.payload)
+        const user = auth.currentUser;
+        if (user) {
+          removeFavouriteFromFirebase(user.uid, action.payload);
+          state.alertMessage = `Removed ${action.payload} from favourites`;
+          state.alertSeverity = "success";
+          state.alertVisible = true;
+        }
+      } catch (error) {
+        state.alertMessage = `Error removing from ${action.payload}: ${error}`;
+        state.alertSeverity = "error";
+        state.alertVisible = true;
       }
     },
     turnInvisible(state, action) {
