@@ -19,12 +19,14 @@ export const favouritesSlice = createSlice({
       state.favourites = action.payload;
     },
     // Check if payload exists in the state and add it to the state. If user is logged in, add it to the database.
-    addFavourite(state, action) {
+    async addFavourite(state, action) {
       if (!state.favourites.some((fav) => fav === action.payload)) {
         try {
           state.favourites = [...state.favourites, action.payload];
           const user = auth.currentUser;
-          if (user) addFavouriteToFirebase(user.uid, action.payload);
+          if (user) {
+            await addFavouriteToFirebase(user.uid, action.payload);
+          }
           state.alertMessage = `Added ${action.payload} to favourites`;
           state.alertSeverity = "success";
           state.alertVisible = true;
