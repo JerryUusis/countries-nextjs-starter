@@ -21,27 +21,11 @@ export const favouritesSlice = createSlice({
     // Check if payload exists in the state and add it to the state. If user is logged in, add it to the database.
     addFavourite(state, action) {
       if (!state.favourites.some((fav) => fav === action.payload)) {
-        try {
-          const updatedFavourites = [...state.favourites, action.payload];
-          const user = auth.currentUser;
-          if (user) {
-            addFavouriteToFirebase(user.uid, action.payload);
-          }
-          return {
-            ...state,
-            favourites: updatedFavourites,
-            alertMessage: `Added ${action.payload} to favourites`,
-            alertSeverity: "success",
-            alertVisible: true
-          }
-        } catch (error) {
-          return {
-            ...state,
-            alertMessage: error,
-            alertSeverity: "error",
-            alertVisible: true
-          }
-        }
+        const updatedFavourites = [...state.favourites, action.payload];
+        state.favourites = updatedFavourites,
+          state.alertMessage = `Added ${action.payload} to favourites`,
+          state.alertSeverity = "success",
+          state.alertVisible = true
       }
     },
     clearFavourites(state, action) {
@@ -80,11 +64,16 @@ export const favouritesSlice = createSlice({
     },
     turnInvisible(state, action) {
       state.alertVisible = action.payload;
+    },
+    updateAlertProps(state, action) {
+      state.alertMessage = action.payload.message;
+      state.alertSeverity = action.payload.severity;
+      state.alertVisible = action.payload.visible;
     }
   },
 });
 
-export const { getFavourites, addFavourite, clearFavourites, removeFavourite, turnInvisible } =
+export const { getFavourites, addFavourite, clearFavourites, removeFavourite, turnInvisible, updateAlertProps } =
   favouritesSlice.actions;
 
 export default favouritesSlice.reducer;
