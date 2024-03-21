@@ -21,10 +21,10 @@ export const favouritesSlice = createSlice({
     addFavourite(state, action) {
       if (!state.favourites.some((fav) => fav === action.payload)) {
         const updatedFavourites = [...state.favourites, action.payload];
-        state.favourites = updatedFavourites,
-          state.alertMessage = `Added ${action.payload} to favourites`,
-          state.alertSeverity = "success",
-          state.alertVisible = true
+        state.favourites = updatedFavourites;
+          state.alertMessage = `Added ${action.payload} to favourites`;
+          state.alertSeverity = "success";
+          state.alertVisible = true;
       }
     },
     clearFavourites(state, action) {
