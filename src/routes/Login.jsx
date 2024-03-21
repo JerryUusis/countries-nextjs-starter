@@ -7,7 +7,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
     const login = () => {
@@ -16,9 +16,8 @@ const Login = () => {
 
     useEffect(() => {
         if (loading) return;
-        if (user) console.log("User info:", user)
         if (user) navigate("/countries")
-    }, [loading, user])
+    }, [loading, navigate, user])
 
     return (
         <Box sx={{ width: "100vw", height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" } }}>

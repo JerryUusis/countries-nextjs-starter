@@ -3,10 +3,9 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 import { addDoc, deleteDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
 const { VITE_FIREBASE_API } = import.meta.env;
 import { getFavourites } from "../store/favouritesSlice";
-// TODO: Add SDKs for Firebase products that you want to use
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: VITE_FIREBASE_API,
     authDomain: "countries-react-app-dd6ab.firebaseapp.com",
@@ -34,7 +33,6 @@ const registerWithEmailAndPassword = async (name, email, password) => {
             authProvider: "local",
             email
         })
-
     } catch (error) {
         console.log(error)
         alert(error.message)

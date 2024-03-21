@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  addFavouriteToFirebase,
   removeFavouriteFromFirebase,
   clearFavouritesFromFirebase,
   auth

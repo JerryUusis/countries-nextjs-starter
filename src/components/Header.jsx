@@ -1,11 +1,11 @@
-import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, colors } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, NavLink } from "react-router-dom";
-import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../auth/firebase";
+import { auth, db, logout } from "../auth/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -14,16 +14,16 @@ const Header = () => {
 
   useEffect(() => {
     try {
-      const userRef = collection(db, "users");
-      const q = query(userRef, where("uid", "==", user?.uid));
-
-      const getUserData = async () => {
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          setLoggedUsername(doc.data().name);
-        });
-      };
       if (user) {
+        const userRef = collection(db, "users");
+        const q = query(userRef, where("uid", "==", user?.uid));
+
+        const getUserData = async () => {
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            setLoggedUsername(doc.data().name);
+          });
+        };
         getUserData()
       }
     }
@@ -42,6 +42,12 @@ const Header = () => {
     setAnchorOpen(!anchorOpen)
   }
 
+  // Used with drawer when logging out
+  const handleLogout = () => {
+    logout()
+    toggleDrawer()
+  }
+
   const setNavBarDisplay = () => {
     if (user) {
       return "space-between"
@@ -54,32 +60,35 @@ const Header = () => {
   const navBarItems = (
     <Toolbar sx={{ display: "flex", justifyContent: setNavBarDisplay() }}>
       {user ? (
-        <Typography >
-          Logged in as <strong>{loggedUsername}</strong>
-        </Typography>
+        <Box sx={{ display: "flex", gap: "0.5rem" }}>
+          <AccountCircleOutlinedIcon />
+          <Typography fontWeight={"bold"}>
+            {loggedUsername}
+          </Typography>
+        </Box>
+
       ) : null}
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-        <NavLink to="/">
-          <Button variant="text" color="secondary">Home</Button>
-        </NavLink>
-        <Link to="/countries">
-          <Button variant="text" color="secondary">Countries</Button>
-        </Link>
-        <Link to="/favourites">
-          <Button variant="text" color="secondary">Favourites</Button>
-        </Link>
-        {!user ? (
+        {user ?
           <>
-            <Link to="/register">
-              <Button variant="text" color="secondary">Register</Button>
+            <Link to="/countries">
+              <Button variant="text" color="secondary">Countries</Button>
             </Link>
+            <Link to="/favourites">
+              <Button variant="text" color="secondary">Favourites</Button>
+            </Link>
+            <Button onClick={logout} variant="outlined" color="secondary">Sign out</Button>
+          </> : <>
+            <NavLink to="/">
+              <Button variant="text" color="secondary">Home</Button>
+            </NavLink>
             <Link to="/login">
               <Button variant="text" color="secondary">Login</Button>
             </Link>
-          </>
-        ) : (
-          <Button onClick={logout} variant="outlined" color="secondary">Sign out</Button>
-        )}
+            <Link to="/register">
+              <Button variant="text" color="secondary">Register</Button>
+            </Link>
+          </>}
       </Box>
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <IconButton
@@ -96,29 +105,28 @@ const Header = () => {
 
   const hamburgerItems = (
     <Box width={200}>
-      <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
-        <ListItemText primary="Home" />
-      </ListItem>
-      <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
-        <ListItemText primary="Countries" />
-      </ListItem>
-      <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
-        <ListItemText primary="Favourites" />
-      </ListItem>
-      {!user ? (
-        <>
-          <ListItem component={Link} to="/register" onClick={toggleDrawer}>
-            <ListItemText primary="Register" />
-          </ListItem>
-          <ListItem component={Link} to="/login" onClick={toggleDrawer}>
-            <ListItemText primary="Login" />
-          </ListItem>
-        </>
-      ) : (
-        <ListItem component={Link} onClick={logout} >
+      {user ? <>
+        <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
+          <ListItemText primary="Countries" />
+        </ListItem>
+        <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
+          <ListItemText primary="Favourites" />
+        </ListItem>
+        <ListItem component={Link} onClick={handleLogout} >
           <ListItemText primary="Sign out" />
         </ListItem>
-      )}
+      </> : <>
+        <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem component={Link} to="/login" onClick={toggleDrawer}>
+          <ListItemText primary="Login" />
+        </ListItem>
+        <ListItem component={Link} to="/register" onClick={toggleDrawer}>
+          <ListItemText primary="Register" />
+        </ListItem>
+      </>
+      }
     </Box>
   );
 
@@ -133,7 +141,7 @@ const Header = () => {
         onClose={toggleDrawer}
         PaperProps={{
           sx: {
-            backgroundColor:"primary.main"
+            backgroundColor: "primary.main"
           }
         }}
       >
