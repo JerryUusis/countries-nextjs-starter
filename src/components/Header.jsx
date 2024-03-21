@@ -13,16 +13,16 @@ const Header = () => {
 
   useEffect(() => {
     try {
-      const userRef = collection(db, "users");
-      const q = query(userRef, where("uid", "==", user?.uid));
-
-      const getUserData = async () => {
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          setLoggedUsername(doc.data().name);
-        });
-      };
       if (user) {
+        const userRef = collection(db, "users");
+        const q = query(userRef, where("uid", "==", user?.uid));
+
+        const getUserData = async () => {
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            setLoggedUsername(doc.data().name);
+          });
+        };
         getUserData()
       }
     }
