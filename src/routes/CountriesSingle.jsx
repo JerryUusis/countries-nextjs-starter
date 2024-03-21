@@ -6,7 +6,7 @@ const { VITE_OPENWEATHER_API, VITE_GOOGLE_API, VITE_GOOGLE_MAP_ID } = import.met
 import AirIcon from '@mui/icons-material/Air';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import { APIProvider, Map } from "@vis.gl/react-google-maps"; //https://visgl.github.io/react-google-maps/
-import { formatLanguages, formatCurrencies } from "../components/CountryCard";
+import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
 import { initializeCountries } from "../store/countriesSlice";
 import { useSelector, useDispatch } from "react-redux";
 import NavigationIcon from '@mui/icons-material/Navigation';
