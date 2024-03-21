@@ -1,9 +1,8 @@
-import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, colors } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, NavLink } from "react-router-dom";
-import { logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../auth/firebase";
+import { auth, db, logout } from "../auth/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -133,7 +132,7 @@ const Header = () => {
         onClose={toggleDrawer}
         PaperProps={{
           sx: {
-            backgroundColor:"primary.main"
+            backgroundColor: "primary.main"
           }
         }}
       >

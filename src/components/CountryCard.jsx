@@ -83,7 +83,7 @@ const CountryCard = ({ country }) => {
       await addFavouriteToFirebase(auth.uid, country.name.common);
     }
     catch (error) {
-      dispatch(updateAlertProps({message: error, severity: "error", visible: true}))
+      dispatch(updateAlertProps({ message: error, severity: "error", visible: true }))
     }
   }
 

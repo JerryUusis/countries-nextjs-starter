@@ -8,7 +8,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
     const register = (event) => {
@@ -53,7 +53,7 @@ const Register = () => {
                     color="secondary"
                 />
                 <Button type="submit" color="secondary" variant="contained">Submit</Button>
-                <Typography mx={"3rem"} sx={{textAlign:"center"}}>Your email is stored for authentication purposes only</Typography>
+                <Typography mx={"3rem"} sx={{ textAlign: "center" }}>Your email is stored for authentication purposes only</Typography>
             </Box>
         </Box>
     )
