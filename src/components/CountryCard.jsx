@@ -5,8 +5,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import TranslateIcon from '@mui/icons-material/Translate';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
-import { addFavourite, removeFavourite } from "../store/favouritesSlice";
+import { addFavourite, removeFavourite, updateAlertProps } from "../store/favouritesSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { addFavouriteToFirebase, auth } from "../auth/firebase";
 
 // Return output separates items with comma
 const formatLanguages = (languagesObject) => {
@@ -76,8 +77,14 @@ const CountryCard = ({ country }) => {
 
   const favourites = useSelector((state) => state.favourites.favourites);
 
-  const handleAddFavouriteClick = () => {
-    dispatch(addFavourite(country.name.common))
+  const handleAddFavouriteClick = async () => {
+    try {
+      dispatch(addFavourite(country.name.common));
+      await addFavouriteToFirebase(auth.uid, country.name.common);
+    }
+    catch (error) {
+      dispatch(updateAlertProps({message: error, severity: "error", visible: true}))
+    }
   }
 
   const handleRemoveFavouriteClick = () => {
