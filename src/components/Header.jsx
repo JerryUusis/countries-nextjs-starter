@@ -64,28 +64,26 @@ const Header = () => {
         </Typography>
       ) : null}
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-        {user ? null :
-          <NavLink to="/">
-            <Button variant="text" color="secondary">Home</Button>
-          </NavLink>}
-        <Link to="/countries">
-          <Button variant="text" color="secondary">Countries</Button>
-        </Link>
-        <Link to="/favourites">
-          <Button variant="text" color="secondary">Favourites</Button>
-        </Link>
-        {!user ? (
+        {user ?
           <>
-            <Link to="/register">
-              <Button variant="text" color="secondary">Register</Button>
+            <Link to="/countries">
+              <Button variant="text" color="secondary">Countries</Button>
             </Link>
+            <Link to="/favourites">
+              <Button variant="text" color="secondary">Favourites</Button>
+            </Link>
+            <Button onClick={logout} variant="outlined" color="secondary">Sign out</Button>
+          </> : <>
+            <NavLink to="/">
+              <Button variant="text" color="secondary">Home</Button>
+            </NavLink>
             <Link to="/login">
               <Button variant="text" color="secondary">Login</Button>
             </Link>
-          </>
-        ) : (
-          <Button onClick={logout} variant="outlined" color="secondary">Sign out</Button>
-        )}
+            <Link to="/register">
+              <Button variant="text" color="secondary">Register</Button>
+            </Link>
+          </>}
       </Box>
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <IconButton
@@ -109,25 +107,21 @@ const Header = () => {
         <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
           <ListItemText primary="Favourites" />
         </ListItem>
-      </> :
-        <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
-          <ListItemText primary="Home" />
-        </ListItem>}
-
-      {!user ? (
-        <>
-          <ListItem component={Link} to="/login" onClick={toggleDrawer}>
-            <ListItemText primary="Login" />
-          </ListItem>
-          <ListItem component={Link} to="/register" onClick={toggleDrawer}>
-            <ListItemText primary="Register" />
-          </ListItem>
-        </>
-      ) : (
         <ListItem component={Link} onClick={handleLogout} >
           <ListItemText primary="Sign out" />
         </ListItem>
-      )}
+      </> : <>
+        <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem component={Link} to="/login" onClick={toggleDrawer}>
+          <ListItemText primary="Login" />
+        </ListItem>
+        <ListItem component={Link} to="/register" onClick={toggleDrawer}>
+          <ListItemText primary="Register" />
+        </ListItem>
+      </>
+      }
     </Box>
   );
 
