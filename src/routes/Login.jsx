@@ -16,9 +16,8 @@ const Login = () => {
 
     useEffect(() => {
         if (loading) return;
-        if (user) console.log("User info:", user)
         if (user) navigate("/countries")
-    }, [loading, user])
+    }, [loading, navigate, user])
 
     return (
         <Box sx={{ width: "100vw", height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" } }}>
