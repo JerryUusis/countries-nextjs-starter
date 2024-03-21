@@ -41,6 +41,12 @@ const Header = () => {
     setAnchorOpen(!anchorOpen)
   }
 
+  // Used with drawer when logging out
+  const handleLogout = () => {
+    logout()
+    toggleDrawer()
+  }
+
   const setNavBarDisplay = () => {
     if (user) {
       return "space-between"
@@ -58,9 +64,10 @@ const Header = () => {
         </Typography>
       ) : null}
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-        <NavLink to="/">
-          <Button variant="text" color="secondary">Home</Button>
-        </NavLink>
+        {user ? null :
+          <NavLink to="/">
+            <Button variant="text" color="secondary">Home</Button>
+          </NavLink>}
         <Link to="/countries">
           <Button variant="text" color="secondary">Countries</Button>
         </Link>
@@ -95,26 +102,29 @@ const Header = () => {
 
   const hamburgerItems = (
     <Box width={200}>
-      <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
-        <ListItemText primary="Home" />
-      </ListItem>
-      <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
-        <ListItemText primary="Countries" />
-      </ListItem>
-      <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
-        <ListItemText primary="Favourites" />
-      </ListItem>
+      {user ? <>
+        <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
+          <ListItemText primary="Countries" />
+        </ListItem>
+        <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
+          <ListItemText primary="Favourites" />
+        </ListItem>
+      </> :
+        <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
+          <ListItemText primary="Home" />
+        </ListItem>}
+
       {!user ? (
         <>
-          <ListItem component={Link} to="/register" onClick={toggleDrawer}>
-            <ListItemText primary="Register" />
-          </ListItem>
           <ListItem component={Link} to="/login" onClick={toggleDrawer}>
             <ListItemText primary="Login" />
           </ListItem>
+          <ListItem component={Link} to="/register" onClick={toggleDrawer}>
+            <ListItemText primary="Register" />
+          </ListItem>
         </>
       ) : (
-        <ListItem component={Link} onClick={logout} >
+        <ListItem component={Link} onClick={handleLogout} >
           <ListItemText primary="Sign out" />
         </ListItem>
       )}
