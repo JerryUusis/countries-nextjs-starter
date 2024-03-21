@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, logout } from "../auth/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -59,9 +60,13 @@ const Header = () => {
   const navBarItems = (
     <Toolbar sx={{ display: "flex", justifyContent: setNavBarDisplay() }}>
       {user ? (
-        <Typography >
-          Logged in as <strong>{loggedUsername}</strong>
-        </Typography>
+        <Box sx={{ display: "flex", gap: "0.5rem" }}>
+          <AccountCircleOutlinedIcon />
+          <Typography fontWeight={"bold"}>
+            {loggedUsername}
+          </Typography>
+        </Box>
+
       ) : null}
       <Box sx={{ display: { xs: "none", sm: "flex" } }}>
         {user ?
