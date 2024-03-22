@@ -7,7 +7,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
 import { addFavourite, removeFavourite, updateAlertProps } from "../store/favouritesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavouriteToFirebase, auth } from "../auth/firebase";
+import { addFavouriteToFirebase, removeFavouriteFromFirebase, auth } from "../auth/firebase";
 import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
 
 const CountryCard = ({ country }) => {
@@ -27,8 +27,14 @@ const CountryCard = ({ country }) => {
     }
   }
 
-  const handleRemoveFavouriteClick = () => {
-    dispatch(removeFavourite(country.name.common));
+  const handleRemoveFavouriteClick = async () => {
+    try {
+      dispatch(removeFavourite(country.name.common));
+      await removeFavouriteFromFirebase(auth.uid, country.name.common);
+    }
+    catch (error) {
+      dispatch(updateAlertProps({message: `Error removing ${country.name.common} from favourites: ${error}`, severity:"error", visible: true}))
+    }
   }
 
   const iconContainerProps = { display: "flex", alignItems: "flex-start", gap: "0.25rem" }

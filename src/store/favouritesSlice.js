@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  removeFavouriteFromFirebase,
   clearFavouritesFromFirebase,
-  auth
 } from "../auth/firebase"
 
 export const favouritesSlice = createSlice({
@@ -22,9 +20,9 @@ export const favouritesSlice = createSlice({
       if (!state.favourites.some((fav) => fav === action.payload)) {
         const updatedFavourites = [...state.favourites, action.payload];
         state.favourites = updatedFavourites;
-          state.alertMessage = `Added ${action.payload} to favourites`;
-          state.alertSeverity = "success";
-          state.alertVisible = true;
+        state.alertMessage = `Added ${action.payload} to favourites`;
+        state.alertSeverity = "success";
+        state.alertVisible = true;
       }
     },
     clearFavourites(state, action) {
@@ -40,26 +38,15 @@ export const favouritesSlice = createSlice({
         state.alertVisible = true;
       }
     },
-    // Find the index of payload and remove it from the state. If user is logged, remove it from the database.
+    // Find the index of payload and remove it from the state.
     removeFavourite(state, action) {
       const newArray = [...state.favourites];
-      try {
-        newArray.splice(
-          newArray.findIndex((element) => element === action.payload), 1);
-        state.favourites = [...newArray];
-
-        const user = auth.currentUser;
-        if (user) {
-          removeFavouriteFromFirebase(user.uid, action.payload);
-          state.alertMessage = `Removed ${action.payload} from favourites`;
-          state.alertSeverity = "success";
-          state.alertVisible = true;
-        }
-      } catch (error) {
-        state.alertMessage = `Error removing from ${action.payload}: ${error}`;
-        state.alertSeverity = "error";
-        state.alertVisible = true;
-      }
+      newArray.splice(
+        newArray.findIndex((element) => element === action.payload), 1);
+      state.favourites = [...newArray];
+      state.alertMessage = `Removed ${action.payload} from favourites`;
+      state.alertSeverity = "success";
+      state.alertVisible = true;
     },
     turnInvisible(state, action) {
       state.alertVisible = action.payload;
