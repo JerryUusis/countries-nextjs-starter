@@ -23,7 +23,11 @@ const CountryCard = ({ country }) => {
       await addFavouriteToFirebase(auth.uid, country.name.common);
     }
     catch (error) {
-      dispatch(updateAlertProps({ message: error, severity: "error", visible: true }))
+      dispatch(updateAlertProps({
+        message: `Error while adding ${country.name.common} to favourites: ${error.message}`,
+        severity: "error",
+        visible: true
+      }))
     }
   }
 
@@ -33,7 +37,11 @@ const CountryCard = ({ country }) => {
       await removeFavouriteFromFirebase(auth.uid, country.name.common);
     }
     catch (error) {
-      dispatch(updateAlertProps({message: `Error removing ${country.name.common} from favourites: ${error}`, severity:"error", visible: true}))
+      dispatch(updateAlertProps({
+        message: `Error while removing ${country.name.common} from favourites: ${error.message}`,
+        severity: "error",
+        visible: true
+      }))
     }
   }
 
