@@ -9,7 +9,6 @@ import AlertHandler from "../components/AlertHandler";
 
 const Favourites = () => {
     const dispatch = useDispatch();
-
     const favourites = useSelector((state) => state.favourites.favourites);
     let countriesList = useSelector((state) => state.countries.countries);
 
