@@ -9,18 +9,20 @@ import { addFavourite, removeFavourite, updateAlertProps } from "../store/favour
 import { useDispatch, useSelector } from "react-redux";
 import { addFavouriteToFirebase, removeFavouriteFromFirebase, auth } from "../auth/firebase";
 import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const CountryCard = ({ country }) => {
   // Flag is in 2∶1 in aspect ratio. Use this value to adjust the scale the flag size correctly.
   const FLAG_HEIGHT = 130;
   const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
 
   const favourites = useSelector((state) => state.favourites.favourites);
 
-  const handleAddFavouriteClick = async () => {
+  const handleAddFavouriteClick =  () => {
     try {
       dispatch(addFavourite(country.name.common));
-      await addFavouriteToFirebase(auth.uid, country.name.common);
+       addFavouriteToFirebase(user.uid, country.name.common);
     }
     catch (error) {
       dispatch(updateAlertProps({
@@ -34,7 +36,7 @@ const CountryCard = ({ country }) => {
   const handleRemoveFavouriteClick = async () => {
     try {
       dispatch(removeFavourite(country.name.common));
-      await removeFavouriteFromFirebase(auth.uid, country.name.common);
+      await removeFavouriteFromFirebase(user.uid, country.name.common);
     }
     catch (error) {
       dispatch(updateAlertProps({
