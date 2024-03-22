@@ -61,7 +61,7 @@ const Header = () => {
     <Toolbar sx={{ display: "flex", justifyContent: setNavBarDisplay() }}>
       {user ? (
         <Box sx={{ display: "flex", gap: "0.5rem" }}>
-          <AccountCircleOutlinedIcon />
+          <AccountCircleOutlinedIcon color="darkest"/>
           <Typography fontWeight={"bold"}>
             {loggedUsername}
           </Typography>
@@ -72,21 +72,21 @@ const Header = () => {
         {user ?
           <>
             <Link to="/countries">
-              <Button variant="text" color="secondary">Countries</Button>
+              <Button variant="text" color="darkest">Countries</Button>
             </Link>
             <Link to="/favourites">
-              <Button variant="text" color="secondary">Favourites</Button>
+              <Button variant="text" color="darkest">Favourites</Button>
             </Link>
-            <Button onClick={logout} variant="outlined" color="secondary">Sign out</Button>
+            <Button onClick={logout} variant="outlined" color="darkest">Sign out</Button>
           </> : <>
             <NavLink to="/">
-              <Button variant="text" color="secondary">Home</Button>
+              <Button variant="text" color="darkest">Home</Button>
             </NavLink>
             <Link to="/login">
-              <Button variant="text" color="secondary">Login</Button>
+              <Button variant="text" color="darkest">Login</Button>
             </Link>
             <Link to="/register">
-              <Button variant="text" color="secondary">Register</Button>
+              <Button variant="text" color="darkest">Register</Button>
             </Link>
           </>}
       </Box>
@@ -95,7 +95,7 @@ const Header = () => {
           size="large"
           edge="end"
           onClick={toggleDrawer}
-          color="secondary"
+          color="darkest"
         >
           <MenuIcon />
         </IconButton>
@@ -106,23 +106,23 @@ const Header = () => {
   const hamburgerItems = (
     <Box width={200}>
       {user ? <>
-        <ListItem component={Link} to="/countries" onClick={toggleDrawer}>
+        <ListItem component={Link} to="/countries" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
           <ListItemText primary="Countries" />
         </ListItem>
-        <ListItem component={Link} to="/favourites" onClick={toggleDrawer}>
+        <ListItem component={Link} to="/favourites" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
           <ListItemText primary="Favourites" />
         </ListItem>
-        <ListItem component={Link} onClick={handleLogout} >
+        <ListItem component={Link} onClick={handleLogout} sx={{color:"darkest.main"}}>
           <ListItemText primary="Sign out" />
         </ListItem>
       </> : <>
-        <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer}>
+        <ListItem component={Link} to="/" color="primary" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem component={Link} to="/login" onClick={toggleDrawer}>
+        <ListItem component={Link} to="/login" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
           <ListItemText primary="Login" />
         </ListItem>
-        <ListItem component={Link} to="/register" onClick={toggleDrawer}>
+        <ListItem component={Link} to="/register" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
           <ListItemText primary="Register" />
         </ListItem>
       </>

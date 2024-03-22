@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { amber, lightBlue } from "@mui/material/colors";
+import { amber, grey, lightBlue } from "@mui/material/colors";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,6 +23,9 @@ const theme = createTheme({
     },
     secondary: {
       main: lightBlue[600],
+    },
+    darkest: {
+      main: grey[900],
     },
   },
 });
