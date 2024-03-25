@@ -74,8 +74,8 @@ const Header = () => {
             <Link to="/countries">
               <Button variant="text" color="darkest">Countries</Button>
             </Link>
-            <Link to="/favourites">
-              <Button variant="text" color="darkest">Favourites</Button>
+            <Link to="/visitedcountries">
+              <Button variant="text" color="darkest">Visited countries</Button>
             </Link>
             <Button onClick={logout} variant="outlined" color="darkest">Sign out</Button>
           </> : <>
@@ -109,8 +109,8 @@ const Header = () => {
         <ListItem component={Link} to="/countries" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
           <ListItemText primary="Countries" />
         </ListItem>
-        <ListItem component={Link} to="/favourites" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
-          <ListItemText primary="Favourites" />
+        <ListItem component={Link} to="/visitedcountries" onClick={toggleDrawer} sx={{color:"darkest.main"}}>
+          <ListItemText primary="Visited countries" />
         </ListItem>
         <ListItem component={Link} onClick={handleLogout} sx={{color:"darkest.main"}}>
           <ListItemText primary="Sign out" />

@@ -2,19 +2,19 @@ import { useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
-import { clearFavourites } from "../store/favouritesSlice";
-import { getFavouritesFromSource, auth } from "../auth/firebase";
+import { clearVisitedCountries } from "../store/visitedCountriesSlice";
+import { getVisitedCountriesFromSource, auth } from "../auth/firebase";
 import CountryCard from "../components/CountryCard";
 import AlertHandler from "../components/AlertHandler";
 
-const Favourites = () => {
+const VisitedCountries = () => {
     const dispatch = useDispatch();
-    const favourites = useSelector((state) => state.favourites.favourites);
+    const visitedCountries = useSelector((state) => state.visitedCountries.visitedCountries);
     let countriesList = useSelector((state) => state.countries.countries);
 
-    if (favourites.length > 0) {
+    if (visitedCountries.length > 0) {
         countriesList = countriesList.filter((country) =>
-            favourites.includes(country.name.common)
+            visitedCountries.includes(country.name.common)
         );
     } else {
         countriesList = [];
@@ -22,12 +22,12 @@ const Favourites = () => {
 
     useEffect(() => {
         dispatch(initializeCountries());
-        dispatch(getFavouritesFromSource());
+        dispatch(getVisitedCountriesFromSource());
         dispatch(initializeCountries(auth.currentUser.uid));
     }, [dispatch]);
 
-    const handleClearFavourites = () => {
-        dispatch(clearFavourites(auth.currentUser.uid))
+    const handleClearVisitedCountries = () => {
+        dispatch(clearVisitedCountries(auth.currentUser.uid))
     }
 
     return (
@@ -42,8 +42,8 @@ const Favourites = () => {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => handleClearFavourites()}>
-                    Clear favourites</Button>
+                    onClick={() => handleClearVisitedCountries()}>
+                    Clear visited countries</Button>
                 <Box sx={{
                     display: "flex",
                     flexFlow: "wrap",
@@ -59,4 +59,4 @@ const Favourites = () => {
     );
 };
 
-export default Favourites;
+export default VisitedCountries;

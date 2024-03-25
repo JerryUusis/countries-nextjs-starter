@@ -1,13 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import countriesReducer from "./countriesSlice";
-
-import favouriteReducer from "./favouritesSlice"
+import visitedCountriesReducer from "./visitedCountriesSlice"
 
 
 
 export default configureStore({
     reducer: {
         countries: countriesReducer,
-        favourites: favouriteReducer
+        visitedCountries: visitedCountriesReducer
     }
 })

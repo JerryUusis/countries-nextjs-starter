@@ -5,9 +5,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import TranslateIcon from '@mui/icons-material/Translate';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
-import { addFavourite, removeFavourite, updateAlertProps } from "../store/favouritesSlice";
+import { addVisitedCountries, removeVisitedCountries, updateAlertProps } from "../store/visitedCountriesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavouriteToFirebase, removeFavouriteFromFirebase, auth } from "../auth/firebase";
+import { addVisitedCountryToFirebase, removeVisitedCountryFromFirebase, auth } from "../auth/firebase";
 import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -17,30 +17,30 @@ const CountryCard = ({ country }) => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
 
-  const favourites = useSelector((state) => state.favourites.favourites);
+  const visitedCountries = useSelector((state) => state.visitedCountries.visitedCountries);
 
-  const handleAddFavouriteClick =  () => {
+  const handleAddVisitedCountryClick = () => {
     try {
-      dispatch(addFavourite(country.name.common));
-       addFavouriteToFirebase(user.uid, country.name.common);
+      dispatch(addVisitedCountries(country.name.common));
+      addVisitedCountryToFirebase(user.uid, country.name.common);
     }
     catch (error) {
       dispatch(updateAlertProps({
-        message: `Error while adding ${country.name.common} to favourites: ${error.message}`,
+        message: `Error while adding ${country.name.common} to visited countries: ${error.message}`,
         severity: "error",
         visible: true
       }))
     }
   }
 
-  const handleRemoveFavouriteClick = async () => {
+  const handleRemoveVisitedCountryClick = async () => {
     try {
-      dispatch(removeFavourite(country.name.common));
-      await removeFavouriteFromFirebase(user.uid, country.name.common);
+      dispatch(removeVisitedCountries(country.name.common));
+      await removeVisitedCountryFromFirebase(user.uid, country.name.common);
     }
     catch (error) {
       dispatch(updateAlertProps({
-        message: `Error while removing ${country.name.common} from favourites: ${error.message}`,
+        message: `Error while removing ${country.name.common} from visited countries: ${error.message}`,
         severity: "error",
         visible: true
       }))
@@ -55,12 +55,12 @@ const CountryCard = ({ country }) => {
     <Box key={country.name.common}>
       <Card sx={{ height: "350px", width: `${FLAG_HEIGHT * 2}px`, display: "flex", flexDirection: "column" }}>
         <Box position={"relative"}>
-          {favourites.includes(country.name.common) ?
+          {visitedCountries.includes(country.name.common) ?
             <FavoriteIcon
-              onClick={handleRemoveFavouriteClick}
+              onClick={handleRemoveVisitedCountryClick}
               sx={favouriteIconProps} /> :
             <FavoriteBorderIcon
-              onClick={handleAddFavouriteClick}
+              onClick={handleAddVisitedCountryClick}
               sx={favouriteIconProps}
             />}
           <Link

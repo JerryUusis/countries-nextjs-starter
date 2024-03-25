@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { addDoc, deleteDoc, collection, getFirestore, query, where, getDocs } from "firebase/firestore"
 const { VITE_FIREBASE_API } = import.meta.env;
-import { getFavourites } from "../store/favouritesSlice";
+import { getVisitedCountries } from "../store/visitedCountriesSlice";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -39,16 +39,16 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     }
 };
 
-export const removeFavouriteFromFirebase = async (uid, name) => {
+export const removeVisitedCountryFromFirebase = async (uid, name) => {
     try {
         if (!name) {
             console.error(
-                "Error removing favourite from Firebase database: name parameter is undefined"
+                "Error removing visited country from Firebase database: name parameter is undefined"
             );
             return;
         }
         const q = query(
-            collection(db, `users/${uid}/favourites`),
+            collection(db, `visited/${uid}/visited`),
             where("name", "==", name)
         );
         const querySnapshot = await getDocs(q);
@@ -56,7 +56,7 @@ export const removeFavouriteFromFirebase = async (uid, name) => {
             deleteDoc(doc.ref);
         })
     } catch (error) {
-        console.error("Error removing favourite from Firebase database: ", error);
+        console.error("Error removing visited country from Firebase database: ", error);
         throw error;
     }
 }
@@ -74,35 +74,35 @@ export const logout = () => {
     auth.signOut()
 }
 
-// Creates a new document named uid that containes a collection called "favourites"
-export const addFavouriteToFirebase = async (uid, name) => {
+// Creates a new document named uid that containes a collection called "visited"
+export const addVisitedCountryToFirebase = async (uid, name) => {
     try {
-        await addDoc(collection(db, `users/${uid}/favourites`), { name });
+        await addDoc(collection(db, `visited/${uid}/visited`), { name });
     }
     catch (error) {
-        console.log("Error adding favourite to Firebase database: ", error);
+        console.log("Error adding visited country to Firebase database: ", error);
         throw error;
     }
 }
 
-export const getFavouritesFromSource = () => async (dispatch) => {
+export const getVisitedCountriesFromSource = () => async (dispatch) => {
     const user = auth.currentUser;
     if (user) {
-        const q = await getDocs(collection(db, `users/${user.uid}/favourites`));
-        const favourites = q.docs.map((doc) => doc.data().name);
-        dispatch(getFavourites(favourites));
+        const q = await getDocs(collection(db, `visited/${user.uid}/visited`));
+        const visitedCountries = q.docs.map((doc) => doc.data().name);
+        dispatch(getVisitedCountries(visitedCountries));
     }
 };
 
-export const clearFavouritesFromFirebase = async (uid) => {
+export const clearVisitedCountriesFromFirebase = async (uid) => {
     try {
-        const q = query(collection(db, `users/${uid}/favourites`));
+        const q = query(collection(db, `visited/${uid}/visited`));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             deleteDoc(doc.ref);
         });
     } catch (err) {
-        console.error("Error removing favourites from Firebase database: ", err);
+        console.error("Error removing visited countries from Firebase database: ", err);
     }
 };
 
