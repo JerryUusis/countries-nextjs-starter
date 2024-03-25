@@ -1,12 +1,12 @@
 import { Alert, Fade } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { turnInvisible } from "../store/favouritesSlice";
+import { turnInvisible } from "../store/visitedCountriesSlice";
 
 const AlertHandler = () => {
-    const faveAddedMessage = useSelector((state) => state.favourites.alertMessage);
-    const faveSeverity = useSelector((state) => state.favourites.alertSeverity);
-    const faveVisible = useSelector((state) => state.favourites.alertVisible);
+    const visitedAddedMessage = useSelector((state) => state.visitedCountries.alertMessage);
+    const visitedSeverity = useSelector((state) => state.visitedCountries.alertSeverity);
+    const visitedVisible = useSelector((state) => state.visitedCountries.alertVisible);
 
     const dispatch = useDispatch();
 
@@ -18,17 +18,17 @@ const AlertHandler = () => {
 
     // Trigger the hideAlertAfterDelay function when faveVisible is true
     useEffect(() => {
-        if (faveVisible) {
+        if (visitedVisible) {
             hideAlertAfterDelay();
         }
     });
 
     return (
-        <Fade sx={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "5" }} in={faveVisible} timeout={250} onExited={() => dispatch(turnInvisible(false))}>
+        <Fade sx={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "5" }} in={visitedVisible} timeout={250} onExited={() => dispatch(turnInvisible(false))}>
             <Alert
-                severity={faveSeverity}
+                severity={visitedSeverity}
                 variant="filled">
-                {faveAddedMessage}
+                {visitedAddedMessage}
             </Alert>
         </Fade>
     )
