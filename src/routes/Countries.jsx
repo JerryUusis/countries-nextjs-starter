@@ -3,7 +3,7 @@ import { Box, TextField, CircularProgress, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import CountryCard from "../components/CountryCard";
-import { getFavouritesFromSource } from "../auth/firebase";
+import { getVisitedCountriesFromSource } from "../auth/firebase";
 import AlertHandler from "../components/AlertHandler";
 
 const Countries = () => {
@@ -14,7 +14,7 @@ const Countries = () => {
 
   useEffect(() => {
     dispatch(initializeCountries());
-    dispatch(getFavouritesFromSource());
+    dispatch(getVisitedCountriesFromSource());
   }, [dispatch]);
 
   if (loading) {
