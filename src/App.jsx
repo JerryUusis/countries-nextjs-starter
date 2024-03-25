@@ -9,7 +9,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProtectedRoute from "./auth/ProtectedRoutes";
 import Countries from "./routes/Countries";
 import CountriesSingle from "./routes/CountriesSingle";
-import Favourites from "./routes/Favourites";
+import VisitedCountries from "./routes/VisitedCountries";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
@@ -47,8 +47,8 @@ function App() {
                   element={<ProtectedRoute component={Countries} />}
                 />
                 <Route
-                  path="/favourites"
-                  element={<ProtectedRoute component={Favourites} />}
+                  path="/visitedcountries"
+                  element={<ProtectedRoute component={VisitedCountries} />}
                 />
                 <Route
                   path="/countries/:single"
