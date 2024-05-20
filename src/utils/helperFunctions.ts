@@ -1,4 +1,4 @@
-import { Currency, Currencies } from "../types/country";
+import { Currencies } from "../types/country";
 
 // Return output separates items with comma
 const formatCurrencies = (currencyObject: Currencies) => {

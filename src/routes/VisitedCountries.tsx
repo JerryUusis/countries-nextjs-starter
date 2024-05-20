@@ -6,8 +6,7 @@ import { clearVisitedCountries } from "../store/visitedCountriesSlice";
 import { getVisitedCountriesFromSource, auth } from "../auth/firebase";
 import CountryCard from "../components/CountryCard";
 import AlertHandler from "../components/AlertHandler";
-import { CountriesStateType } from "../types/reduxStateTypes";
-import { VisitedCountriesStateType } from "../types/reduxStateTypes";
+import { CountriesStateType, VisitedCountriesStateType } from "../types/reduxStateTypes";
 import { AppDispatch } from "../store/store";
 
 const VisitedCountries = () => {

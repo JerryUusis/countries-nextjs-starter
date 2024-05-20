@@ -29,7 +29,6 @@ const CountryCard = ({ country }: CountryCardProps) => {
   // Flag is in 2∶1 in aspect ratio. Use this value to adjust the scale the flag size correctly.
   const FLAG_HEIGHT = 130;
   const dispatch = useDispatch();
-  const [user] = useAuthState(auth);
 
   const currentUser = auth.currentUser;
 

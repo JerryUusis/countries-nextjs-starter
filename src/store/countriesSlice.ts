@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import countriesService from "../services/countries";
 import { Country } from "../types/country";
-import { AppDispatch } from "./store";
 
 export const initializeCountries = () => {
   return async (dispatch: Dispatch) => {

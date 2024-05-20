@@ -1,6 +1,5 @@
 import axios from "axios";
 import { VITE_OPENWEATHER_API } from "../utils/config";
-import { Country } from "../types/country";
 
 export const getWeather = async (capital: string[]) => {
   try {
