@@ -17,7 +17,6 @@ import {
   auth,
 } from "../auth/firebase";
 import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { VisitedCountriesStateType } from "../types/reduxStateTypes";
 import { Country } from "../types/country";
 
