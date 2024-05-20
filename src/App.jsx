@@ -1,9 +1,6 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { amber, grey, lightBlue } from "@mui/material/colors";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProtectedRoute from "./auth/ProtectedRoutes";
@@ -33,32 +30,30 @@ const theme = createTheme({
 function App() {
   return (
     <Provider store={store}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Root />}>
-                <Route index element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-                <Route
-                  path="/countries"
-                  element={<ProtectedRoute component={Countries} />}
-                />
-                <Route
-                  path="/visitedcountries"
-                  element={<ProtectedRoute component={VisitedCountries} />}
-                />
-                <Route
-                  path="/countries/:single"
-                  element={<ProtectedRoute component={CountriesSingle} />}
-                />
-              </Route>
-            </Routes>
-          </Router>
-        </ThemeProvider>
-      </LocalizationProvider>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route
+                path="/countries"
+                element={<ProtectedRoute component={Countries} />}
+              />
+              <Route
+                path="/visitedcountries"
+                element={<ProtectedRoute component={VisitedCountries} />}
+              />
+              <Route
+                path="/countries/:single"
+                element={<ProtectedRoute component={CountriesSingle} />}
+              />
+            </Route>
+          </Routes>
+        </Router>
+      </ThemeProvider>
     </Provider>
   );
 }
