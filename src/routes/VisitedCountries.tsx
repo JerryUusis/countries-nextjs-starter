@@ -6,8 +6,13 @@ import { clearVisitedCountries } from "../store/visitedCountriesSlice";
 import { getVisitedCountriesFromSource, auth } from "../auth/firebase";
 import CountryCard from "../components/CountryCard";
 import AlertHandler from "../components/AlertHandler";
-import { CountriesStateType, VisitedCountriesStateType } from "../types/reduxStateTypes";
+import {
+  CountriesStateType,
+  VisitedCountriesStateType,
+} from "../types/reduxStateTypes";
 import { AppDispatch } from "../store/store";
+import { handleAlert } from "../utils/helperFunctions";
+import { AlertSeverity } from "../types/muiComponents";
 
 const VisitedCountries = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -33,9 +38,18 @@ const VisitedCountries = () => {
     dispatch(getVisitedCountriesFromSource());
   }, [dispatch]);
 
+  const showAlert = (message: string, severity: AlertSeverity) => {
+    handleAlert(dispatch, message, severity);
+  };
+
   const handleClearVisitedCountries = () => {
     if (currentUser) {
       dispatch(clearVisitedCountries(currentUser));
+    }
+    if (countriesList.length === 0) {
+      showAlert("Visited countries already cleared", "info");
+    } else {
+      showAlert("Visited countries cleared", "success");
     }
   };
 
