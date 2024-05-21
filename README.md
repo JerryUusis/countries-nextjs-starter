@@ -4,9 +4,7 @@
 
 This project is a web application built with React.js and Material-UI to explore countries around the world. Users can search for their favorite destinations, discover information such as languages, currencies, and population, and save their favorite countries for quick access. 
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=JerryUusis_countries-nextjs-starter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=JerryUusis_countries-nextjs-starter)
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=JerryUusis_countries-nextjs-starter)](https://sonarcloud.io/summary/new_code?id=JerryUusis_countries-nextjs-starter)
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=JerryUusis_countries-nextjs-starter)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=JerryUusis_countries-nextjs-starter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=JerryUusis_countries-nextjs-starter)[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=JerryUusis_countries-nextjs-starter)](https://sonarcloud.io/summary/new_code?id=JerryUusis_countries-nextjs-starter)
 
 ## Features
 
