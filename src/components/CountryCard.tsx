@@ -22,7 +22,6 @@ import {
 } from "../utils/helperFunctions";
 import { VisitedCountriesStateType } from "../types/reduxStateTypes";
 import { Country } from "../types/country";
-import { setAlert } from "../store/alertSlice";
 import { AlertSeverity } from "../types/muiComponents";
 
 interface CountryCardProps {
