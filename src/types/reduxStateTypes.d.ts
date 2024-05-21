@@ -15,7 +15,7 @@ interface VisitedCountriesStateType {
 
 interface AlertStateType {
   alert: {
-    visibility: boolean;
+    isVisible: boolean;
     message: string;
     severity: "success" | "warning" | "error" | "info";
   };

@@ -3,19 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const alertSlice = createSlice({
   name: "alert",
   initialState: {
-    visibility: false,
+    isVisible: false,
     message: "",
     severity: "",
   },
   reducers: {
     setAlert: (state, action) => {
-      const { visibility, message, severity } = action.payload;
-      state.visibility = visibility;
+      const { isVisible, message, severity } = action.payload;
+      state.isVisible = isVisible;
       state.message = message;
       state.severity = severity;
     },
     setIsVisible: (state, action) => {
-      state.visibility = action.payload;
+      state.isVisible = action.payload;
     },
   },
 });
