@@ -55,8 +55,8 @@ const registerWithEmailAndPassword = async (
       email,
     });
   } catch (error) {
-    console.log(error);
-    alert(error.message);
+    console.error(error);
+    throw error;
   }
 };
 
@@ -96,7 +96,7 @@ export const loginWithEmailAndPassword = async (
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.log(error);
-    alert(error.message);
+    throw error;
   }
 };
 
@@ -134,11 +134,9 @@ export const clearVisitedCountriesFromFirebase = async (uid: string) => {
     querySnapshot.forEach((doc) => {
       deleteDoc(doc.ref);
     });
-  } catch (err) {
-    console.error(
-      "Error removing visited countries from Firebase database: ",
-      err
-    );
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
 
