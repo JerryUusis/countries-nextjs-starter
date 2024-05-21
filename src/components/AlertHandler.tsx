@@ -2,36 +2,49 @@ import { Alert, Fade } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { turnInvisible } from "../store/visitedCountriesSlice";
+import { AlertStateType } from "../types/reduxStateTypes";
+import { setIsVisible } from "../store/alertSlice";
 
 const AlertHandler = () => {
-    const visitedAddedMessage = useSelector((state) => state.visitedCountries.alertMessage);
-    const visitedSeverity = useSelector((state) => state.visitedCountries.alertSeverity);
-    const visitedVisible = useSelector((state) => state.visitedCountries.alertVisible);
+  const message = useSelector((state: AlertStateType) => state.alert.message);
+  const severity = useSelector((state: AlertStateType) => state.alert.severity);
+  const visibility = useSelector(
+    (state: AlertStateType) => state.alert.visibility
+  );
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const hideAlertAfterDelay = () => {
-        setTimeout(() => {
-            dispatch(turnInvisible(false)); // Dispatch action to turn alert invisible
-        }, 2000);
-    };
+  useEffect(() => {
+    if (visibility) {
+      const timeoutId = setTimeout(() => {
+        dispatch(setIsVisible(false));
+      }, 3500);
+      return () => clearTimeout(timeoutId);
+    }
+  });
 
-    // Trigger the hideAlertAfterDelay function when faveVisible is true
-    useEffect(() => {
-        if (visitedVisible) {
-            hideAlertAfterDelay();
-        }
-    });
+  return (
+    <Fade
+      in={visibility}
+      timeout={250}
+      onExited={() => dispatch(turnInvisible(false))}
+    >
+      <Alert
+        severity={severity}
+        variant="filled"
+        sx={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: "5",
+        }}
+        onClick={() => dispatch(turnInvisible(false))}
+      >
+        {message}
+      </Alert>
+    </Fade>
+  );
+};
 
-    return (
-        <Fade sx={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "5" }} in={visitedVisible} timeout={250} onExited={() => dispatch(turnInvisible(false))}>
-            <Alert
-                severity={visitedSeverity}
-                variant="filled">
-                {visitedAddedMessage}
-            </Alert>
-        </Fade>
-    )
-}
-
-export default AlertHandler
+export default AlertHandler;
