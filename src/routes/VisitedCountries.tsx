@@ -13,6 +13,7 @@ import {
 import { AppDispatch } from "../store/store";
 import { handleAlert } from "../utils/helperFunctions";
 import { AlertSeverity } from "../types/muiComponents";
+import { clearVisitedCountriesFromFirebase } from "../auth/firebase";
 
 const VisitedCountries = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -42,14 +43,30 @@ const VisitedCountries = () => {
     handleAlert(dispatch, message, severity);
   };
 
-  const handleClearVisitedCountries = () => {
-    if (currentUser) {
-      dispatch(clearVisitedCountries(currentUser));
+  // Clear countries from Redux and database and show alert
+  const clearCountries = async () => {
+    try {
+      if (currentUser) {
+        dispatch(clearVisitedCountries(currentUser));
+        await clearVisitedCountriesFromFirebase(currentUser.uid);
+        showAlert("Visited countries cleared", "success");
+      } else {
+        return;
+      }
+    } catch (error: any) {
+      showAlert(error.message, "error");
     }
+  };
+
+  // Clear visited countries from redux and database if there are any.
+  // Show alert
+  const handleClearVisitedCountries = () => {
+    if (!currentUser) return;
+
     if (countriesList.length === 0) {
       showAlert("Visited countries already cleared", "info");
     } else {
-      showAlert("Visited countries cleared", "success");
+      clearCountries();
     }
   };
 
