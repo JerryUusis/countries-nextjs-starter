@@ -216,12 +216,16 @@ const CountriesSingle = () => {
               <TableRow>
                 <TableCell>{country.capital} current weather</TableCell>
                 <TableCell>
-                  <ThermostatIcon />
-                  Temperature
+                  <Box sx={{ display: "flex", gap:"0.5rem" }}>
+                    <ThermostatIcon />
+                    Temperature
+                  </Box>
                 </TableCell>
                 <TableCell>
-                  <AirIcon />
-                  Wind
+                  <Box sx={{ display: "flex", gap:"0.5rem" }}>
+                    <AirIcon />
+                    Wind
+                  </Box>
                 </TableCell>
               </TableRow>
             </TableHead>
