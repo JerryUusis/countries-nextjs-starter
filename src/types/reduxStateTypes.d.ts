@@ -13,4 +13,12 @@ interface VisitedCountriesStateType {
   };
 }
 
-export { CountriesStateType, VisitedCountriesStateType };
+interface AlertStateType {
+  alert: {
+    visibility: boolean;
+    message: string;
+    severity: "success" | "warning" | "error" | "info";
+  };
+}
+
+export { CountriesStateType, VisitedCountriesStateType, AlertStateType };
