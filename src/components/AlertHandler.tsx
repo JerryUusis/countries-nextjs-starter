@@ -1,21 +1,20 @@
 import { Alert, Fade } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { turnInvisible } from "../store/visitedCountriesSlice";
 import { AlertStateType } from "../types/reduxStateTypes";
 import { setIsVisible } from "../store/alertSlice";
 
 const AlertHandler = () => {
   const message = useSelector((state: AlertStateType) => state.alert.message);
   const severity = useSelector((state: AlertStateType) => state.alert.severity);
-  const visibility = useSelector(
-    (state: AlertStateType) => state.alert.visibility
+  const isVisible = useSelector(
+    (state: AlertStateType) => state.alert.isVisible
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (visibility) {
+    if (isVisible) {
       const timeoutId = setTimeout(() => {
         dispatch(setIsVisible(false));
       }, 3500);
@@ -24,11 +23,7 @@ const AlertHandler = () => {
   });
 
   return (
-    <Fade
-      in={visibility}
-      timeout={250}
-      onExited={() => dispatch(turnInvisible(false))}
-    >
+    <Fade in={isVisible} timeout={250}>
       <Alert
         severity={severity}
         variant="filled"
@@ -39,7 +34,7 @@ const AlertHandler = () => {
           transform: "translate(-50%, -50%)",
           zIndex: "5",
         }}
-        onClick={() => dispatch(turnInvisible(false))}
+        onClick={() => dispatch(setIsVisible(false))}
       >
         {message}
       </Alert>
