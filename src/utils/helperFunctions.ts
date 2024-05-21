@@ -1,4 +1,7 @@
 import { Currencies } from "../types/country";
+import { Dispatch } from "redux";
+import { setAlert } from "../store/alertSlice";
+import { AlertSeverity } from "../types/muiComponents";
 
 // Return output separates items with comma
 const formatCurrencies = (currencyObject: Currencies) => {
@@ -55,4 +58,12 @@ const formatLanguages = (languagesObject: { [key: string]: string }) => {
   return formattedLanguages;
 };
 
-export { formatCurrencies, formatLanguages };
+const handleAlert = (
+  dispatch: Dispatch,
+  message: string,
+  severity: AlertSeverity
+) => {
+  dispatch(setAlert({ isVisible: true, message, severity }));
+};
+
+export { formatCurrencies, formatLanguages, handleAlert };
