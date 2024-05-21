@@ -3,7 +3,11 @@ import { Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import { clearVisitedCountries } from "../store/visitedCountriesSlice";
-import { getVisitedCountriesFromSource, auth } from "../auth/firebase";
+import {
+  getVisitedCountriesFromSource,
+  auth,
+  clearVisitedCountriesFromFirebase,
+} from "../auth/firebase";
 import CountryCard from "../components/CountryCard";
 import AlertHandler from "../components/AlertHandler";
 import {
@@ -13,7 +17,6 @@ import {
 import { AppDispatch } from "../store/store";
 import { handleAlert } from "../utils/helperFunctions";
 import { AlertSeverity } from "../types/muiComponents";
-import { clearVisitedCountriesFromFirebase } from "../auth/firebase";
 
 const VisitedCountries = () => {
   const dispatch: AppDispatch = useDispatch();

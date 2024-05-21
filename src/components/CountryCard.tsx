@@ -15,11 +15,14 @@ import {
   removeVisitedCountryFromFirebase,
   auth,
 } from "../auth/firebase";
-import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
+import {
+  formatCurrencies,
+  formatLanguages,
+  handleAlert,
+} from "../utils/helperFunctions";
 import { VisitedCountriesStateType } from "../types/reduxStateTypes";
 import { Country } from "../types/country";
 import { setAlert } from "../store/alertSlice";
-import { handleAlert } from "../utils/helperFunctions";
 import { AlertSeverity } from "../types/muiComponents";
 
 interface CountryCardProps {
@@ -38,7 +41,7 @@ const CountryCard = ({ country }: CountryCardProps) => {
       state.visitedCountries.visitedCountries
   );
 
-  // Shows alert on the page 
+  // Shows alert on the page
   const showAlert = (message: string, severity: AlertSeverity) => {
     handleAlert(dispatch, message, severity);
   };
@@ -54,13 +57,9 @@ const CountryCard = ({ country }: CountryCardProps) => {
         );
       }
     } catch (error) {
-      dispatch(
-        setAlert(
-          showAlert(
-            `Error while adding ${country.name.common} to visited countries: ${error.message}`,
-            "error"
-          )
-        )
+      showAlert(
+        `Error while adding ${country.name.common} to visited countries: ${error.message}`,
+        "error"
       );
     }
   };
