@@ -3,6 +3,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerWithEmailAndPassword } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, TextField, Button } from "@mui/material";
+import { handleAlert } from "../utils/helperFunctions";
+import { AlertSeverity } from "../types/muiComponents";
+import { useDispatch } from "react-redux";
+import AlertHandler from "../components/AlertHandler";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -10,11 +14,19 @@ const Register = () => {
   const [name, setName] = useState("");
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const register = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!name) alert("Please enter your name");
-    registerWithEmailAndPassword(name, email, password);
+  const showAlert = (message: string, severity: AlertSeverity) => {
+    handleAlert(dispatch, message, severity);
+  };
+
+  const register = async (event: React.FormEvent<HTMLFormElement>) => {
+    try {
+      event.preventDefault();
+      await registerWithEmailAndPassword(name, email, password);
+    } catch (error: any) {
+      showAlert(error.message, "warning");
+    }
   };
 
   useEffect(() => {
@@ -30,6 +42,7 @@ const Register = () => {
         height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" },
       }}
     >
+      <AlertHandler />
       <Box
         sx={{
           display: "flex",

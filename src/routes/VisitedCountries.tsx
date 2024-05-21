@@ -3,11 +3,20 @@ import { Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import { clearVisitedCountries } from "../store/visitedCountriesSlice";
-import { getVisitedCountriesFromSource, auth } from "../auth/firebase";
+import {
+  getVisitedCountriesFromSource,
+  auth,
+  clearVisitedCountriesFromFirebase,
+} from "../auth/firebase";
 import CountryCard from "../components/CountryCard";
 import AlertHandler from "../components/AlertHandler";
-import { CountriesStateType, VisitedCountriesStateType } from "../types/reduxStateTypes";
+import {
+  CountriesStateType,
+  VisitedCountriesStateType,
+} from "../types/reduxStateTypes";
 import { AppDispatch } from "../store/store";
+import { handleAlert } from "../utils/helperFunctions";
+import { AlertSeverity } from "../types/muiComponents";
 
 const VisitedCountries = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -33,9 +42,34 @@ const VisitedCountries = () => {
     dispatch(getVisitedCountriesFromSource());
   }, [dispatch]);
 
+  const showAlert = (message: string, severity: AlertSeverity) => {
+    handleAlert(dispatch, message, severity);
+  };
+
+  // Clear countries from Redux and database and show alert
+  const clearCountries = async () => {
+    try {
+      if (currentUser) {
+        dispatch(clearVisitedCountries(currentUser));
+        await clearVisitedCountriesFromFirebase(currentUser.uid);
+        showAlert("Visited countries cleared", "success");
+      } else {
+        return;
+      }
+    } catch (error: any) {
+      showAlert(error.message, "error");
+    }
+  };
+
+  // Clear visited countries from redux and database if there are any.
+  // Show alert
   const handleClearVisitedCountries = () => {
-    if (currentUser) {
-      dispatch(clearVisitedCountries(currentUser));
+    if (!currentUser) return;
+
+    if (countriesList.length === 0) {
+      showAlert("Visited countries already cleared", "info");
+    } else {
+      clearCountries();
     }
   };
 

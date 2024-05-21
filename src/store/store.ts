@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import countriesReducer from "./countriesSlice";
 import visitedCountriesReducer from "./visitedCountriesSlice";
+import alertReducer from "./alertSlice";
 
-export const store =  configureStore({
+export const store = configureStore({
   reducer: {
     countries: countriesReducer,
     visitedCountries: visitedCountriesReducer,
+    alert: alertReducer,
   },
 });
 

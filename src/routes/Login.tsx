@@ -2,16 +2,32 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import AlertHandler from "../components/AlertHandler";
+import { handleAlert } from "../utils/helperFunctions";
+import { useDispatch } from "react-redux";
+import { AlertSeverity } from "../types/muiComponents";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const login = () => {
-    loginWithEmailAndPassword(email, password);
+  const showAlert = (message: string, severity: AlertSeverity) => {
+    handleAlert(dispatch, message, severity);
+  };
+
+  const login = async () => {
+    try {
+      await loginWithEmailAndPassword(email, password);
+    } catch (error: any) {
+      showAlert(error.message, "warning");
+    }
   };
 
   useEffect(() => {
@@ -36,6 +52,7 @@ const Login = () => {
           height: "100%",
         }}
       >
+        <AlertHandler />
         <Typography variant="h1" sx={{ fontSize: "2rem" }} component={"h1"}>
           Login
         </Typography>

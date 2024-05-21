@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import {
   addVisitedCountries,
   removeVisitedCountries,
-  updateAlertProps,
 } from "../store/visitedCountriesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,9 +15,14 @@ import {
   removeVisitedCountryFromFirebase,
   auth,
 } from "../auth/firebase";
-import { formatCurrencies, formatLanguages } from "../utils/helperFunctions";
+import {
+  formatCurrencies,
+  formatLanguages,
+  handleAlert,
+} from "../utils/helperFunctions";
 import { VisitedCountriesStateType } from "../types/reduxStateTypes";
 import { Country } from "../types/country";
+import { AlertSeverity } from "../types/muiComponents";
 
 interface CountryCardProps {
   country: Country;
@@ -36,19 +40,25 @@ const CountryCard = ({ country }: CountryCardProps) => {
       state.visitedCountries.visitedCountries
   );
 
+  // Shows alert on the page
+  const showAlert = (message: string, severity: AlertSeverity) => {
+    handleAlert(dispatch, message, severity);
+  };
+
   const handleAddVisitedCountryClick = () => {
     try {
       if (currentUser) {
         dispatch(addVisitedCountries(country.name.common));
         addVisitedCountryToFirebase(currentUser.uid, country.name.common);
+        showAlert(
+          `Added ${country.name.common} to visited countries`,
+          "success"
+        );
       }
     } catch (error) {
-      dispatch(
-        updateAlertProps({
-          message: `Error while adding ${country.name.common} to visited countries: ${error.message}`,
-          severity: "error",
-          visible: true,
-        })
+      showAlert(
+        `Error while adding ${country.name.common} to visited countries: ${error.message}`,
+        "error"
       );
     }
   };
@@ -61,14 +71,15 @@ const CountryCard = ({ country }: CountryCardProps) => {
           currentUser.uid,
           country.name.common
         );
+        showAlert(
+          `Removed ${country.name.common} from visited countries`,
+          "success"
+        );
       }
     } catch (error) {
-      dispatch(
-        updateAlertProps({
-          message: `Error while removing ${country.name.common} from visited countries: ${error.message}`,
-          severity: "error",
-          visible: true,
-        })
+      showAlert(
+        `Error while removing ${country.name.common} from visited countries: ${error.message}`,
+        "error"
       );
     }
   };
