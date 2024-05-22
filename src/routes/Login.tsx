@@ -22,7 +22,8 @@ const Login = () => {
     handleAlert(dispatch, message, severity);
   };
 
-  const login = async () => {
+  const login = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       await loginWithEmailAndPassword(email, password);
     } catch (error: any) {
@@ -42,6 +43,7 @@ const Login = () => {
         height: { xs: "calc(100vh - 56px)", sm: "calc(100vh - 64px)" },
       }}
     >
+      <AlertHandler />
       <Box
         sx={{
           display: "flex",
@@ -51,8 +53,9 @@ const Login = () => {
           alignItems: "center",
           height: "100%",
         }}
+        component={"form"}
+        onSubmit={login}
       >
-        <AlertHandler />
         <Typography variant="h1" sx={{ fontSize: "2rem" }} component={"h1"}>
           Login
         </Typography>
@@ -72,7 +75,7 @@ const Login = () => {
           onChange={(event) => setPassword(event.target.value)}
           color="secondary"
         />
-        <Button onClick={login} color="secondary" variant="contained">
+        <Button color="secondary" variant="contained" type="submit">
           Login
         </Button>
       </Box>
