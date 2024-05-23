@@ -5,7 +5,7 @@ const alertSlice = createSlice({
   initialState: {
     isVisible: false,
     message: "",
-    severity: "",
+    severity: "success",
   },
   reducers: {
     setAlert: (state, action) => {
