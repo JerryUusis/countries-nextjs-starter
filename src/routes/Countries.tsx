@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { Box, TextField, CircularProgress, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeCountries, isLoading } from "../store/countriesSlice";
+import { initializeCountries } from "../store/countriesSlice";
 import CountryCard from "../components/CountryCard";
 import { getVisitedCountriesFromSource } from "../auth/firebase";
 import AlertHandler from "../components/AlertHandler";
