@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { Box, TextField, CircularProgress, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
 import CountryCard from "../components/CountryCard";
@@ -8,6 +11,8 @@ import AlertHandler from "../components/AlertHandler";
 import { CountriesStateType } from "../types/reduxStateTypes";
 import { Country } from "../types/country";
 import { AppDispatch } from "../store/store";
+import { handleAlert } from "../utils/helperFunctions";
+import { AlertSeverity } from "../types/muiComponents";
 
 const Countries = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -19,9 +24,17 @@ const Countries = () => {
   );
   const [search, setSearch] = useState("");
 
+  const showAlert = (message: string, severity: AlertSeverity) => {
+    handleAlert(dispatch, message, severity);
+  };
+
   useEffect(() => {
-    dispatch(initializeCountries());
-    dispatch(getVisitedCountriesFromSource());
+    try {
+      dispatch(initializeCountries());
+      dispatch(getVisitedCountriesFromSource());
+    } catch (error: any) {
+      showAlert(error.message, "error");
+    }
   }, [dispatch]);
 
   if (loading) {
