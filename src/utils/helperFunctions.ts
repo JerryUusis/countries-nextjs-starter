@@ -33,7 +33,7 @@ const formatCurrencies = (currencyObject: Currencies) => {
 
 // Return output separates items with comma
 const formatLanguages = (languagesObject: { [key: string]: string }) => {
-  if (!languagesObject) {
+  if (!languagesObject || typeof languagesObject !== "object") {
     return [];
   }
 
