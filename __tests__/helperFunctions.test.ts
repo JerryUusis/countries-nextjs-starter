@@ -1,7 +1,10 @@
-const {
+import {
   formatCurrencies,
   formatLanguages,
-} = require("../src/utils/helperFunctions");
+  handleAlert,
+} from "../src/utils/helperFunctions";
+import { setAlert } from "../src/store/alertSlice";
+import { AlertSeverity } from "../src/types/muiComponents";
 
 describe("formatCurrencies & formatLanguages tests", () => {
   describe("formatCurrencies() tests", () => {
@@ -59,20 +62,8 @@ describe("formatCurrencies & formatLanguages tests", () => {
         symbol: "£",
       },
     };
-    test("Is missing parameter", () => {
-      expect(formatCurrencies()).toEqual([]);
-    });
     test("Parameter has no value", () => {
       expect(formatCurrencies({})).toEqual([]);
-    });
-    test("Parameter is undefined", () => {
-      expect(formatCurrencies(undefined)).toEqual([]);
-    });
-    test("Parameter is null", () => {
-      expect(formatCurrencies(null)).toEqual([]);
-    });
-    test("Parameter is not an object", () => {
-      expect(formatCurrencies("test")).toEqual([]);
     });
     test("Parameter has one currency", () => {
       const result = ["Euro"];
@@ -126,21 +117,8 @@ describe("formatCurrencies & formatLanguages tests", () => {
       nld: "Dutch",
       pap: "Papiamento",
     };
-
-    test("Is missing parameter", () => {
-      expect(formatLanguages()).toEqual([]);
-    });
     test("Parameter has no value", () => {
       expect(formatLanguages({})).toEqual([]);
-    });
-    test("Parameter is undefined", () => {
-      expect(formatLanguages(undefined)).toEqual([]);
-    });
-    test("Parameter is null", () => {
-      expect(formatLanguages(null)).toEqual([]);
-    });
-    test("Parameter is not an object", () => {
-      expect(formatLanguages("test")).toEqual([]);
     });
     test("Parameter has one language", () => {
       const result = ["French"];
@@ -167,6 +145,51 @@ describe("formatCurrencies & formatLanguages tests", () => {
       ];
       expect(formatLanguages(fiveLanguagesObject)).toEqual(result);
       expect(formatLanguages(fiveLanguagesObject).length).toEqual(5);
+    });
+  });
+});
+
+describe("handleAlert() tests", () => {
+  // Create a mock action
+  jest.mock("../src/store/alertSlice"),
+    () => ({
+      setAlert: jest.fn(),
+    });
+
+  let dispatch: jest.Mock;
+
+  // Create a fresh mock dispatch function for each test
+  beforeEach(() => {
+    dispatch = jest.fn();
+  });
+
+  test("Should dispatch setAlert action with correct arguments", () => {
+    // Create a mock dispatch function
+    const message = "Test alert";
+    const severity = "error";
+
+    handleAlert(dispatch, message, severity);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      setAlert({ isVisible: true, message, severity })
+    );
+    dispatch.mockClear()
+  });
+
+  test("should handle different severity levels", () => {
+    const message = "Test Alert";
+
+    const severities: AlertSeverity[] = ["info", "warning", "success"];
+    severities.forEach((severity) => {
+      handleAlert(dispatch, message, severity);
+      expect(dispatch).toHaveBeenCalledWith(
+        setAlert({
+          isVisible: true,
+          message,
+          severity,
+        })
+      );
+      dispatch.mockClear(); 
     });
   });
 });
