@@ -5,7 +5,7 @@ import { AlertSeverity } from "../types/muiComponents";
 
 // Return output separates items with comma
 const formatCurrencies = (currencyObject: Currencies) => {
-  if (!currencyObject) {
+  if (!currencyObject || typeof currencyObject !== "object") {
     return [];
   }
 
