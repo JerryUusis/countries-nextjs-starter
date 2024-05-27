@@ -15,7 +15,7 @@ const formatCurrencies = (currencyObject: Currencies) => {
   }
 
   if (currencies.length === 1) {
-    return currencies[0].name;
+    return [currencies[0].name];
   } else {
     const formattedCurrencies = [];
     for (let i = 0; i < currencies.length; i++) {
